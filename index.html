@@ -2057,4 +2057,14 @@
       const href = tab.getAttribute('href').replace('#', '');
       if (href === current) {
         tab.style.transform = 'scale(1.05)';
-       
+        tab.style.boxShadow = '0 0 12px rgba(255,255,255,0.06)';
+      } else {
+        tab.style.transform = 'scale(1)';
+        tab.style.boxShadow = 'none';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

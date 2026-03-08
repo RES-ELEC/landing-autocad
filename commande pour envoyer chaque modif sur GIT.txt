@@ -1,0 +1,4 @@
+cd "C:\Users\chapo\Desktop\landing AUTOMBE"
+git add .
+git commit -m "Mise a jour"
+git push origin main
