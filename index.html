@@ -643,7 +643,7 @@
 
   /* ============ PRESTATIONS / AUTOMATISATIONS ============ */
   .prestations-section {
-    padding: 120px 40px;
+    padding: 40px 40px 60px;
     max-width: 1100px;
     margin: 0 auto;
   }
@@ -899,10 +899,26 @@
 
   /* Sub-label divider — BIG section separator */
   .section-divider {
-    margin: 80px 0 40px;
-    padding: 40px 0;
+    margin: 20px 0 20px;
+    padding: 32px 0;
     text-align: center;
     position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .section-divider.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section-divider .divider-number,
+  .section-divider .divider-sub {
+    opacity: 0;
+    transition: opacity 0.5s ease 0.15s;
+  }
+  .section-divider.visible .divider-number,
+  .section-divider.visible .divider-sub {
+    opacity: 1;
   }
   .section-divider::before,
   .section-divider::after {
@@ -943,6 +959,20 @@
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
+    overflow: hidden;
+  }
+  .section-divider .divider-title .letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .section-divider .divider-title .letter.space {
+    width: 0.3em;
+  }
+  .section-divider.visible .divider-title .letter {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
   .section-divider.yellow .divider-title { color: var(--brand-yellow); }
   .section-divider.blue .divider-title { color: var(--brand-blue-light); }
@@ -959,7 +989,7 @@
   .section-divider.blue .divider-sub { color: var(--brand-yellow); }
   .section-divider.magenta .divider-sub { color: var(--text-primary); }
   @media (max-width: 768px) {
-    .section-divider { margin: 48px 0 28px; padding: 28px 0; }
+    .section-divider { margin: 16px 0 16px; padding: 24px 0; }
     .section-divider .divider-title { font-size: 1.2rem; }
   }
 
@@ -988,53 +1018,73 @@
 
   /* Category intro card */
   .category-intro {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 40px;
-    margin-bottom: 60px;
+    background: linear-gradient(135deg, rgba(16, 19, 28, 0.95), rgba(12, 15, 23, 0.98));
+    border: none;
+    border-radius: 20px;
+    padding: 44px 48px;
+    margin: 0 auto 60px;
+    max-width: 760px;
+    text-align: center;
     position: relative;
     overflow: hidden;
+    /* Gradient border trick */
+    background-clip: padding-box;
+    isolation: isolate;
   }
   .category-intro::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
     background: var(--gradient-accent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
   }
   .category-intro.magenta-intro::before {
-    background: linear-gradient(90deg, var(--brand-magenta), var(--brand-magenta-light));
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-magenta), var(--brand-magenta-light));
   }
   .category-intro h3 {
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.5px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
   .category-intro p {
     font-size: 0.98rem;
     color: var(--text-secondary);
     line-height: 1.7;
-    max-width: 680px;
+    max-width: 600px;
+    margin: 0 auto;
   }
   .category-intro .gain-highlight {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 16px;
-    padding: 8px 18px;
-    background: rgba(234, 179, 8, 0.08);
-    border: 1px solid rgba(234, 179, 8, 0.15);
+    gap: 10px;
+    margin-top: 24px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(234, 179, 8, 0.04));
+    border: 1px solid rgba(234, 179, 8, 0.25);
     border-radius: 50px;
-    font-size: 0.88rem;
-    font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 700;
     color: var(--brand-yellow);
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 20px rgba(234, 179, 8, 0.08);
   }
   .category-intro .gain-highlight.magenta-highlight {
-    background: rgba(224, 64, 160, 0.08);
-    border-color: rgba(224, 64, 160, 0.15);
+    background: linear-gradient(135deg, rgba(224, 64, 160, 0.1), rgba(224, 64, 160, 0.04));
+    border-color: rgba(224, 64, 160, 0.25);
     color: var(--brand-magenta);
+    box-shadow: 0 4px 20px rgba(224, 64, 160, 0.08);
+  }
+  .category-intro .gain-highlight.blue-highlight {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.04));
+    border-color: rgba(37, 99, 235, 0.25);
+    color: var(--brand-blue-light);
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
   }
 
   /* ============ SOFTWARE INTRO ============ */
@@ -1293,7 +1343,7 @@
     .hero { padding: 120px 24px 80px; }
     .trust-bar { flex-direction: column; gap: 24px; }
     .pain-section, .prestations-section,
-    .cta-section, .form-section { padding: 80px 20px; }
+    .cta-section, .form-section { padding: 40px 20px; }
     .cta-box { padding: 48px 28px; }
     .devis-form { padding: 32px 24px; }
     .form-row { grid-template-columns: 1fr; }
@@ -1416,7 +1466,7 @@
 <!-- ========================================== -->
 <!-- PARTIE 1 : COMMANDE                        -->
 <!-- ========================================== -->
-<section class="prestations-section" id="commande">
+<section class="prestations-section" id="commande" style="padding-top:100px;">
   <div class="section-header reveal">
     <div class="section-label">Nos automatisations AutoCAD</div>
     <div class="brand-divider"></div>
@@ -1437,13 +1487,13 @@
   </div>
 
   <!-- Section Divider: Partie 1 -->
-  <div class="section-divider yellow reveal">
+  <div class="section-divider yellow">
     <div class="divider-number">Partie 1</div>
-    <div class="divider-title">Automatisation partie commande</div>
+    <div class="divider-title">Partie commande</div>
     <div class="divider-sub">Borniers · Synthèses · Étiquettes · Sur mesure</div>
   </div>
 
-  <div class="category-intro reveal">
+  <div class="category-intro yellow-intro reveal">
     <h3>⚙️ Automatisation de la partie commande</h3>
     <p>La partie commande des schémas est souvent longue, complexe et fastidieuse à réaliser manuellement. Bornier, synthèses défauts, étiquetages... autant de tâches répétitives qui mobilisent un temps considérable. Nos automatisations sur mesure transforment ces heures de travail en quelques clics.</p>
     <div class="gain-highlight">⏱️ Gain potentiel : jusqu'à 4h par schéma</div>
@@ -1561,16 +1611,16 @@
 <section class="prestations-section" id="schema">
 
   <!-- Section Divider: Partie 2 -->
-  <div class="section-divider blue reveal">
+  <div class="section-divider blue">
     <div class="divider-number">Partie 2</div>
-    <div class="divider-title">Automatisation schéma / puissance</div>
+    <div class="divider-title">Schéma / puissance</div>
     <div class="divider-sub">Remplissage auto · Dessin auto · Données CANECO</div>
   </div>
 
-  <div class="category-intro reveal">
+  <div class="category-intro blue-intro reveal">
     <h3>📐 Automatisation de la partie schéma</h3>
     <p>La réalisation d'un schéma de puissance est le cœur du travail d'un bureau d'études. Grâce à l'exploitation intelligente des données issues de notes de calcul CANECO et à un codage avancé développé par nos soins, nous automatisons le remplissage et même le dessin de vos schémas. Des heures de travail économisées sur chaque projet.</p>
-    <div class="gain-highlight">⏱️ Gain potentiel : jusqu'à 3h par schéma de 100 départs</div>
+    <div class="gain-highlight blue-highlight">⏱️ Gain potentiel : jusqu'à 3h par schéma de 100 départs</div>
   </div>
 
   <!-- 1 — Remplissage automatique depuis note de calcul -->
@@ -1657,9 +1707,9 @@
 <section class="prestations-section" id="verifications">
 
   <!-- Section Divider: Partie 3 -->
-  <div class="section-divider magenta reveal">
+  <div class="section-divider magenta">
     <div class="divider-number">Partie 3</div>
-    <div class="divider-title">Automatisation des vérifications</div>
+    <div class="divider-title">Vérifications des schémas</div>
     <div class="divider-sub">Symboles · Incohérences · Sommaires · Reports · TBS</div>
   </div>
 
@@ -1973,6 +2023,29 @@
     });
   }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Letter-by-letter animation for section divider titles
+  document.querySelectorAll('.section-divider .divider-title').forEach(title => {
+    const text = title.textContent;
+    title.innerHTML = '';
+    text.split('').forEach((char, i) => {
+      const span = document.createElement('span');
+      span.className = char === ' ' ? 'letter space' : 'letter';
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      span.style.transitionDelay = (i * 30) + 'ms';
+      title.appendChild(span);
+    });
+  });
+
+  const dividerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        dividerObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.section-divider').forEach(el => dividerObserver.observe(el));
 
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
