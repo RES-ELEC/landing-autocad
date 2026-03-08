@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RES ELEC — Automatisations AutoCAD sur mesure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090e;
+    --bg-surface: #0c0f17;
+    --bg-card: #10131c;
+    --bg-card-hover: #161a26;
+    --brand-blue: #2563eb;
+    --brand-blue-light: #3b82f6;
+    --brand-yellow: #eab308;
+    --brand-yellow-light: #facc15;
+    --brand-yellow-glow: rgba(234, 179, 8, 0.12);
+    --brand-blue-glow: rgba(37, 99, 235, 0.12);
+    --accent-green: #10b981;
+    --brand-magenta: #e040a0;
+    --brand-magenta-light: #f472b6;
+    --brand-magenta-glow: rgba(224, 64, 160, 0.12);
+    --text-primary: #f0f2f5;
+    --text-secondary: #8b92a5;
+    --text-muted: #505872;
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(255,255,255,0.12);
+    --gradient-brand: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-light));
+    --gradient-warm: linear-gradient(135deg, var(--brand-yellow), #f59e0b);
+    --gradient-accent: linear-gradient(90deg, var(--brand-blue), var(--brand-yellow));
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ============ BRAND SIDE BARS ============ */
+  .side-bar {
+    position: fixed;
+    top: 0; bottom: 0;
+    width: 5px;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .side-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 100%;
+  }
+  .side-bar-left { left: 0; }
+  .side-bar-left::after {
+    background: linear-gradient(to bottom, transparent 5%, var(--brand-blue) 30%, var(--brand-blue-light) 70%, transparent 95%);
+    opacity: 0.7;
+    box-shadow: 4px 0 30px rgba(37, 99, 235, 0.15), 8px 0 60px rgba(37, 99, 235, 0.06);
+  }
+  .side-bar-left::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 40px;
+    background: linear-gradient(to right, rgba(37, 99, 235, 0.06), transparent);
+    pointer-events: none;
+  }
+  .side-bar-right { right: 0; }
+  .side-bar-right::after {
+    background: linear-gradient(to bottom, transparent 5%, var(--brand-yellow) 30%, var(--brand-yellow-light) 70%, transparent 95%);
+    opacity: 0.7;
+    box-shadow: -4px 0 30px rgba(234, 179, 8, 0.15), -8px 0 60px rgba(234, 179, 8, 0.06);
+  }
+  .side-bar-right::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; right: 0;
+    width: 40px;
+    background: linear-gradient(to left, rgba(234, 179, 8, 0.06), transparent);
+    pointer-events: none;
+  }
+  @media (max-width: 768px) {
+    .side-bar { width: 3px; }
+    .side-bar-left::before, .side-bar-right::before { width: 20px; }
+  }
+
+  .bg-glow {
+    position: fixed;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    filter: blur(160px);
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow-1 { top: -200px; right: -100px; background: var(--brand-blue); }
+  .bg-glow-2 { bottom: -200px; left: -100px; background: var(--brand-yellow); opacity: 0.035; }
+
+  /* ============ REVEALS ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.15); }
+  }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(7, 9, 14, 0.92);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+  .logo-placeholder {
+    height: 42px;
+    padding: 0 16px;
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-yellow));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: white;
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+  }
+
+  /* New nav with 3 rubrics */
+  .nav-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .nav-center-top {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    opacity: 0.5;
+  }
+  .nav-center-bottom {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .nav-tab {
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 50px;
+    transition: all 0.3s;
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  .nav-tab.tab-commande {
+    color: var(--brand-yellow);
+    background: rgba(234, 179, 8, 0.06);
+    border-color: rgba(234, 179, 8, 0.12);
+  }
+  .nav-tab.tab-commande:hover {
+    background: rgba(234, 179, 8, 0.12);
+    border-color: rgba(234, 179, 8, 0.25);
+  }
+  .nav-tab.tab-schema {
+    color: var(--brand-blue-light);
+    background: rgba(37, 99, 235, 0.06);
+    border-color: rgba(37, 99, 235, 0.12);
+  }
+  .nav-tab.tab-schema:hover {
+    background: rgba(37, 99, 235, 0.12);
+    border-color: rgba(37, 99, 235, 0.25);
+  }
+  .nav-tab.tab-verif {
+    color: var(--brand-magenta);
+    background: rgba(224, 64, 160, 0.06);
+    border-color: rgba(224, 64, 160, 0.12);
+  }
+  .nav-tab.tab-verif:hover {
+    background: rgba(224, 64, 160, 0.12);
+    border-color: rgba(224, 64, 160, 0.25);
+  }
+  .nav-tab-sep {
+    width: 1px;
+    height: 16px;
+    background: var(--border-hover);
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+  }
+  .nav-cta {
+    background: var(--gradient-brand) !important;
+    color: white !important;
+    padding: 10px 26px;
+    border-radius: 50px;
+    font-weight: 600 !important;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s !important;
+  }
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.3);
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 140px 40px 60px;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brand-blue), var(--brand-yellow), var(--brand-blue), transparent);
+    opacity: 0.5;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(135deg, rgba(16, 19, 28, 0.9), rgba(37, 99, 235, 0.08));
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    margin-bottom: 36px;
+    animation: fadeInDown 0.8s ease-out, badgeGlow 4s ease-in-out infinite;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.3px;
+  }
+  .hero-badge::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.06), transparent);
+    animation: badgeShimmer 4s ease-in-out infinite;
+  }
+  @keyframes badgeShimmer {
+    0%, 100% { left: -100%; }
+    50% { left: 100%; }
+  }
+  @keyframes badgeGlow {
+    0%, 100% { border-color: rgba(37, 99, 235, 0.2); }
+    50% { border-color: rgba(234, 179, 8, 0.25); }
+  }
+  .hero-badge .badge-icon {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .hero-badge .badge-bolt {
+    color: var(--brand-yellow);
+    font-size: 1.1rem;
+    animation: boltPulse 2s ease-in-out infinite;
+  }
+  @keyframes boltPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.9); }
+  }
+  .hero-badge .badge-separator {
+    width: 1px; height: 16px;
+    background: linear-gradient(to bottom, transparent, var(--brand-blue-light), transparent);
+    opacity: 0.4;
+  }
+  .hero-badge .badge-text {
+    position: relative;
+    z-index: 1;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .hero-badge .badge-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--accent-green);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .hero-badge .badge-status .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    animation: pulse-dot 2s infinite;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -2.5px;
+    max-width: 900px;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.8s ease-out 0.1s both;
+  }
+  .text-blue { color: var(--brand-blue-light); }
+  .text-yellow { color: var(--brand-yellow); }
+
+  .hero-sub {
+    font-size: 1.12rem;
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    line-height: 1.7;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--gradient-brand);
+    color: white;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.2px;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 44px rgba(37, 99, 235, 0.35);
+  }
+  .btn-primary .arrow { transition: transform 0.3s; }
+  .btn-primary:hover .arrow { transform: translateX(4px); }
+  .btn-yellow { background: var(--gradient-warm); color: #0a0c12; }
+  .btn-yellow:hover { box-shadow: 0 14px 44px rgba(234, 179, 8, 0.3); }
+
+  .btn-secondary {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .btn-secondary:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    transform: translateY(-1px);
+  }
+
+  .trust-item { text-align: center; }
+  .trust-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--brand-yellow);
+  }
+  .trust-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+  .trust-bar {
+    margin-top: 56px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+  }
+  @media (max-width: 768px) {
+    .trust-bar { margin-bottom: 20px; }
+  }
+
+  /* ============ SECTION COMMON ============ */
+  section { position: relative; z-index: 1; }
+  .section-header { text-align: center; margin-bottom: 64px; }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--brand-blue-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .section-label.yellow { color: var(--brand-yellow); }
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+  .section-subtitle {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 620px;
+    margin: 0 auto;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .brand-divider {
+    width: 60px; height: 3px;
+    background: var(--gradient-accent);
+    margin: 0 auto 20px;
+    border-radius: 2px;
+  }
+
+  /* ============ FLOATING CONTACT BUTTON ============ */
+  .floating-contact {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    pointer-events: none;
+  }
+  .floating-contact-expanded {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .floating-contact.open .floating-contact-expanded {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .floating-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 0.3s;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .floating-option:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    transform: translateX(-4px);
+  }
+  .floating-option .opt-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .floating-option .opt-icon.phone { background: var(--brand-blue-glow); }
+  .floating-option .opt-icon.mail { background: var(--brand-yellow-glow); }
+  .floating-btn {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: var(--gradient-brand);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: auto;
+    position: relative;
+  }
+  .floating-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 40px rgba(37, 99, 235, 0.4);
+  }
+  .floating-btn .btn-icon { transition: transform 0.3s; }
+  .floating-contact.open .floating-btn .btn-icon { transform: rotate(45deg); }
+  .floating-btn svg {
+    width: 24px; height: 24px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .floating-btn::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--brand-blue-light);
+    opacity: 0;
+    animation: pulseRing 3s ease-out infinite;
+  }
+  @keyframes pulseRing {
+    0% { opacity: 0.6; transform: scale(1); }
+    70% { opacity: 0; transform: scale(1.4); }
+    100% { opacity: 0; transform: scale(1.4); }
+  }
+  .floating-contact.open .floating-btn::before {
+    animation: none;
+    opacity: 0;
+  }
+  @media (max-width: 768px) {
+    .floating-contact { bottom: 20px; right: 20px; }
+    .floating-btn { width: 54px; height: 54px; }
+  }
+
+  /* ============ PAIN POINTS / AVANTAGES ============ */
+  .pain-section {
+    padding: 100px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .pain-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .pain-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gradient-warm);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .pain-card:hover { border-color: rgba(234,179,8,0.15); transform: translateY(-4px); }
+  .pain-card:hover::before { opacity: 1; }
+  .pain-card.blue-accent::before { background: var(--gradient-brand); }
+  .pain-card.blue-accent:hover { border-color: rgba(37,99,235,0.15); }
+  .pain-emoji { font-size: 2rem; margin-bottom: 20px; display: block; }
+  .pain-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+  .pain-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; }
+
+  /* ============ PRESTATIONS / AUTOMATISATIONS ============ */
+  .prestations-section {
+    padding: 120px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .prestation-block {
+    margin-bottom: 80px;
+  }
+  .prestation-block:last-child { margin-bottom: 0; }
+
+  .prestation-header {
+    max-width: 780px;
+    margin-bottom: 32px;
+  }
+
+  .prestation-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
+  .prestation-tag.blue { color: var(--brand-blue-light); background: var(--brand-blue-glow); }
+  .prestation-tag.yellow { color: var(--brand-yellow); background: var(--brand-yellow-glow); }
+  .prestation-tag.green { color: var(--brand-magenta); background: var(--brand-magenta-glow); }
+  .prestation-tag .tag-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+  }
+  .prestation-tag.blue .tag-dot { background: var(--brand-blue-light); }
+  .prestation-tag.yellow .tag-dot { background: var(--brand-yellow); }
+  .prestation-tag.green .tag-dot { background: var(--brand-magenta); }
+
+  .prestation-header h3 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .prestation-header p {
+    font-size: 0.98rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .prestation-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .prestation-feat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .prestation-feat:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+  }
+  .prestation-feat .dot-blue { color: var(--brand-blue-light); }
+  .prestation-feat .dot-yellow { color: var(--brand-yellow); }
+  .prestation-feat .dot-green { color: var(--brand-magenta); }
+
+  /* Gain de temps badge */
+  .gain-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.03));
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: var(--accent-green);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-top: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.3px;
+  }
+  .gain-badge .clock-icon { font-size: 1rem; }
+
+  /* "En cours de développement" badge */
+  .dev-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(249, 115, 22, 0.04));
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    color: #fb923c;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    animation: devPulse 3s ease-in-out infinite;
+  }
+  .dev-badge .dev-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #fb923c;
+    animation: pulse-dot 2s infinite;
+    box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
+  }
+  @keyframes devPulse {
+    0%, 100% { border-color: rgba(249, 115, 22, 0.3); }
+    50% { border-color: rgba(249, 115, 22, 0.5); }
+  }
+
+  /* Video placeholder */
+  .prestation-preview {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+  .prestation-preview:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+  }
+  .prestation-preview.blue-glow:hover { box-shadow: 0 30px 80px rgba(37, 99, 235, 0.08); }
+  .prestation-preview.yellow-glow:hover { box-shadow: 0 30px 80px rgba(234, 179, 8, 0.06); }
+
+  .preview-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 20px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .toolbar-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    opacity: 0.3;
+  }
+  .toolbar-dot:nth-child(1) { background: #ef4444; opacity: 0.6; }
+  .toolbar-dot:nth-child(2) { background: var(--brand-yellow); opacity: 0.6; }
+  .toolbar-dot:nth-child(3) { background: var(--accent-green); opacity: 0.6; }
+  .toolbar-title {
+    margin-left: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+
+  .preview-content {
+    aspect-ratio: 16/8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(145deg, #0a0d15 0%, #111728 40%, #0a0d15 100%);
+  }
+  .preview-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .preview-play {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s;
+    animation: float 3s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+  }
+  .preview-play.blue {
+    background: var(--gradient-brand);
+    box-shadow: 0 12px 36px rgba(37, 99, 235, 0.3);
+  }
+  .preview-play.yellow {
+    background: var(--gradient-warm);
+    box-shadow: 0 12px 36px rgba(234, 179, 8, 0.25);
+  }
+  .prestation-preview:hover .preview-play { transform: scale(1.12); }
+  .preview-play svg {
+    width: 24px; height: 24px; fill: white; margin-left: 3px;
+  }
+  .preview-hint {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .preview-hint .scroll-icon {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    opacity: 0.6;
+  }
+  .preview-hint .scroll-icon span {
+    display: block;
+    width: 14px; height: 22px;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 10px;
+    position: relative;
+  }
+  .preview-hint .scroll-icon span::after {
+    content: '';
+    position: absolute;
+    top: 4px; left: 50%;
+    transform: translateX(-50%);
+    width: 2px; height: 6px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    animation: scrollDot 1.5s infinite;
+  }
+  @keyframes scrollDot {
+    0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(3px); }
+  }
+  .prestation-preview video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Sub-label divider — BIG section separator */
+  .section-divider {
+    margin: 80px 0 40px;
+    padding: 40px 0;
+    text-align: center;
+    position: relative;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+  }
+  .section-divider::before { top: 0; }
+  .section-divider::after { bottom: 0; }
+  .section-divider.yellow::before,
+  .section-divider.yellow::after {
+    background: linear-gradient(90deg, transparent, rgba(234, 179, 8, 0.3), rgba(234, 179, 8, 0.5), rgba(234, 179, 8, 0.3), transparent);
+  }
+  .section-divider.blue::before,
+  .section-divider.blue::after {
+    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), rgba(37, 99, 235, 0.5), rgba(37, 99, 235, 0.3), transparent);
+  }
+  .section-divider.magenta::before,
+  .section-divider.magenta::after {
+    background: linear-gradient(90deg, transparent, rgba(224, 64, 160, 0.3), rgba(224, 64, 160, 0.5), rgba(224, 64, 160, 0.3), transparent);
+  }
+  .section-divider .divider-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.5;
+  }
+  .section-divider.yellow .divider-number { color: var(--brand-yellow); }
+  .section-divider.blue .divider-number { color: var(--brand-blue-light); }
+  .section-divider.magenta .divider-number { color: var(--brand-magenta); }
+  .section-divider .divider-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .section-divider.yellow .divider-title { color: var(--brand-yellow); }
+  .section-divider.blue .divider-title { color: var(--brand-blue-light); }
+  .section-divider.magenta .divider-title { color: var(--brand-magenta); }
+  .section-divider .divider-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  @media (max-width: 768px) {
+    .section-divider { margin: 48px 0 28px; padding: 28px 0; }
+    .section-divider .divider-title { font-size: 1.2rem; }
+  }
+
+  /* Legacy sub-label kept for compat */
+  .prestation-sub-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 20px;
+  }
+  .sub-label-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+  }
+  .sub-label-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--brand-yellow);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .sub-label-text.blue { color: var(--brand-blue-light); }
+  .sub-label-text.green { color: var(--brand-magenta); }
+
+  /* Category intro card */
+  .category-intro {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .category-intro::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gradient-accent);
+  }
+  .category-intro.magenta-intro::before {
+    background: linear-gradient(90deg, var(--brand-magenta), var(--brand-magenta-light));
+  }
+  .category-intro h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+  .category-intro p {
+    font-size: 0.98rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 680px;
+  }
+  .category-intro .gain-highlight {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 8px 18px;
+    background: rgba(234, 179, 8, 0.08);
+    border: 1px solid rgba(234, 179, 8, 0.15);
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--brand-yellow);
+  }
+  .category-intro .gain-highlight.magenta-highlight {
+    background: rgba(224, 64, 160, 0.08);
+    border-color: rgba(224, 64, 160, 0.15);
+    color: var(--brand-magenta);
+  }
+
+  /* ============ SOFTWARE INTRO ============ */
+  .software-intro {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px;
+    margin-bottom: 64px;
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .software-intro::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-yellow), var(--brand-magenta));
+  }
+  .software-intro-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .software-intro-icon {
+    font-size: 2.4rem;
+    margin-bottom: 16px;
+  }
+  .software-intro-content h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+  .software-intro-content p {
+    font-size: 0.98rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+  .software-intro-content p strong {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+  .software-intro-preview {
+    flex: 0 0 340px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #0a0d15;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .software-intro-preview:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 28px 80px rgba(37, 99, 235, 0.12);
+    border-color: rgba(37, 99, 235, 0.2);
+  }
+  .software-intro-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  @media (max-width: 768px) {
+    .software-intro {
+      flex-direction: column;
+      padding: 32px 24px;
+      gap: 32px;
+    }
+    .software-intro-preview {
+      flex: none;
+      width: 100%;
+    }
+  }
+
+  /* ============ FORM ============ */
+  .form-section {
+    padding: 120px 40px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .devis-form {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .devis-form::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gradient-accent);
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    font-family: inherit;
+    transition: all 0.3s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px var(--brand-blue-glow);
+  }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b92a5' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+  .form-submit { margin-top: 12px; width: 100%; text-align: center; }
+  .form-submit .btn-primary { width: 100%; justify-content: center; }
+
+  /* ============ CTA ============ */
+  .cta-section {
+    padding: 120px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .cta-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 72px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gradient-accent);
+  }
+  .cta-box::after {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: var(--brand-blue);
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.05;
+    pointer-events: none;
+  }
+  .cta-box h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .cta-box p {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    font-weight: 300;
+    position: relative; z-index: 1;
+  }
+  .cta-box .btn-primary { position: relative; z-index: 1; font-size: 1.05rem; padding: 20px 48px; }
+  .cta-guarantees {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 32px;
+    position: relative; z-index: 1;
+    flex-wrap: wrap;
+  }
+  .cta-guarantee {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+  }
+  .cta-guarantee .check { color: var(--accent-green); font-size: 1rem; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-left { font-size: 0.82rem; color: var(--text-muted); }
+  .footer-right { display: flex; gap: 24px; }
+  .footer-right a { font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+  .footer-right a:hover { color: var(--text-primary); }
+
+  /* ============ AUTOCAD BADGE ============ */
+  .autocad-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(16, 19, 28, 0.95), rgba(234, 179, 8, 0.06));
+    border: 1px solid rgba(234, 179, 8, 0.2);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: var(--brand-yellow);
+  }
+  .autocad-badge .badge-check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--gradient-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    color: #0a0c12;
+    flex-shrink: 0;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 768px) {
+    nav { padding: 8px 16px; }
+    .nav-center { display: none; }
+    .hero { padding: 120px 24px 80px; }
+    .trust-bar { flex-direction: column; gap: 24px; }
+    .pain-section, .prestations-section,
+    .cta-section, .form-section { padding: 80px 20px; }
+    .cta-box { padding: 48px 28px; }
+    .devis-form { padding: 32px 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .prestation-features { flex-direction: column; }
+    .pain-grid { grid-template-columns: 1fr; }
+    .category-intro { padding: 28px 24px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .nav-tab { font-size: 0.72rem; padding: 5px 12px; }
+    .nav-center-top { font-size: 0.65rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="side-bar side-bar-left"></div>
+<div class="side-bar side-bar-right"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo-reselec.png" alt="RES ELEC" style="height:42px;width:auto;" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo-placeholder\'>RES <span class=\'elec\'>ELEC</span></div>';">
+  </a>
+  <div class="nav-center">
+    <div class="nav-center-top">Automatisation</div>
+    <div class="nav-center-bottom">
+      <a href="#commande" class="nav-tab tab-commande">Partie commande</a>
+      <span class="nav-tab-sep"></span>
+      <a href="#schema" class="nav-tab tab-schema">Partie schéma / puissance</a>
+      <span class="nav-tab-sep"></span>
+      <a href="#verifications" class="nav-tab tab-verif">Partie vérification</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a href="#devis" class="nav-cta">Demander un devis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="badge-icon">
+      <span class="badge-bolt">⚡</span>
+    </span>
+    <span class="badge-separator"></span>
+    <span class="badge-text"><span style="color:var(--brand-yellow)">Automatisations</span> <span style="color:var(--brand-blue-light)">AutoCAD</span></span>
+  </div>
+
+  <div class="hero-logo" style="margin-bottom:32px; animation: fadeInUp 0.8s ease-out 0.05s both;">
+    <img src="logo-reselec.png" alt="RES ELEC" style="height:80px;width:auto;" onerror="this.outerHTML='<div style=\'height:80px;padding:0 32px;background:linear-gradient(135deg,var(--brand-blue),var(--brand-yellow));border-radius:16px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:1.6rem;color:white;letter-spacing:-0.5px;\'>RES ELEC</div>';">
+  </div>
+
+  <h1>
+    Automatisez jusqu'à <span class="text-yellow">80%</span> des tâches<br>
+    de vos schémas <span class="text-blue">AUTOCAD</span>
+  </h1>
+
+  <p class="hero-sub">
+    Des automatisations sur mesure, adaptées à vos trames DWG de schémas électriques. Gagnez des heures de travail par schéma, éliminez les erreurs humaines et livrez des schémas impeccables — là où la fatigue et la répétition peuvent faire défaut.
+  </p>
+
+  <div class="hero-buttons">
+    <a href="#devis" class="btn-primary btn-yellow">
+      Demander un devis gratuit <span class="arrow">→</span>
+    </a>
+    <a href="#commande" class="btn-secondary">Voir nos automatisations</a>
+  </div>
+
+  <div class="trust-bar">
+    <div class="trust-item">
+      <div class="trust-number">10+</div>
+      <div class="trust-label">Automatisations de trames</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-number" style="color:var(--brand-blue-light)">⚡</div>
+      <div class="trust-label">Réactivité</div>
+    </div>
+    <div class="trust-item">
+      <div class="autocad-badge">
+        <span class="badge-check">✓</span>
+        Homologué AutoCAD 2026 — Format DWG
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSTAT / AVANTAGES -->
+<section class="pain-section">
+  <div class="section-header reveal">
+    <div class="section-label yellow">Pourquoi automatiser ?</div>
+    <div class="brand-divider"></div>
+    <h2 class="section-title">Vos schémas méritent mieux</h2>
+    <p class="section-subtitle">Un schéma de 100 départs réalisé à la main, c'est des heures de travail répétitif et un risque d'erreur à chaque ligne.</p>
+  </div>
+  <div class="pain-grid">
+    <div class="pain-card reveal">
+      <span class="pain-emoji">⏱️</span>
+      <h3>Des heures perdues en tâches répétitives</h3>
+      <p>Borniers, synthèses défauts, reports de folio... Ces tâches chronophages consomment un temps précieux qui pourrait être mieux investi.</p>
+    </div>
+    <div class="pain-card blue-accent reveal">
+      <span class="pain-emoji">🎯</span>
+      <h3>Zéro erreur, zéro oubli</h3>
+      <p>Nos automatisations produisent des schémas impeccables et sans fautes. Là où un être humain peut se tromper avec la fatigue ou le temps passé sur un long schéma, l'automatisation reste infaillible.</p>
+    </div>
+    <div class="pain-card reveal">
+      <span class="pain-emoji">🔧</span>
+      <h3>Du 100% sur mesure</h3>
+      <p>Chaque automatisation est adaptée à votre trame DWG, vos conventions de dessin et vos exigences métier. Pas de solution générique.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AUTOMATISATIONS ============ -->
+
+<!-- ========================================== -->
+<!-- PARTIE 1 : COMMANDE                        -->
+<!-- ========================================== -->
+<section class="prestations-section" id="commande">
+  <div class="section-header reveal">
+    <div class="section-label">Nos automatisations AutoCAD</div>
+    <div class="brand-divider"></div>
+    <h2 class="section-title">Gagnez des heures sur chaque schéma</h2>
+    <p class="section-subtitle">Des commandes automatisées pour la partie qualitative, la partie schéma/puissance, et des contrôles intelligents pour des schémas sans erreur.</p>
+  </div>
+
+  <!-- Software intro -->
+  <div class="software-intro reveal">
+    <div class="software-intro-content">
+      <div class="software-intro-icon">🖥️</div>
+      <h3>Un logiciel livré clé en main, prêt à l'emploi</h3>
+      <p>En fonction des automatisations choisies, un <strong>mini logiciel sur mesure</strong> vous sera livré. Concrètement, une fois votre fichier DWG ouvert dans AutoCAD, il vous suffira de <strong>cliquer sur chaque action</strong> que vous souhaitez exécuter depuis notre interface — et tout se fera directement sur AutoCAD, sans manipulation supplémentaire. Simple, rapide, efficace.</p>
+    </div>
+    <div class="software-intro-preview">
+      <img src="Interface_logicielle.png" alt="Interface du logiciel d'automatisation RES ELEC" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Section Divider: Partie 1 -->
+  <div class="section-divider yellow reveal">
+    <div class="divider-number">Partie 1</div>
+    <div class="divider-title">Automatisation partie commande</div>
+    <div class="divider-sub">Borniers · Synthèses · Étiquettes · Sur mesure</div>
+  </div>
+
+  <div class="category-intro reveal">
+    <h3>⚙️ Automatisation de la partie commande</h3>
+    <p>La partie commande des schémas est souvent longue, complexe et fastidieuse à réaliser manuellement. Bornier, synthèses défauts, étiquetages... autant de tâches répétitives qui mobilisent un temps considérable. Nos automatisations sur mesure transforment ces heures de travail en quelques clics.</p>
+    <div class="gain-highlight">⏱️ Gain potentiel : jusqu'à 4h par schéma</div>
+  </div>
+
+  <!-- 1 — Schéma de bornier -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag yellow"><span class="tag-dot"></span> Automatisation commande</div>
+      <h3>Schéma de bornier automatique</h3>
+      <p>Lors de la création d'un schéma pour une nouvelle armoire, générez automatiquement l'intégralité du schéma de bornier. Chaque bloc de bornier est créé avec sa désignation complète et le détail de chacun des départs — plus besoin de tout saisir à la main.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-yellow">●</span> Blocs de bornier auto-générés</span>
+        <span class="prestation-feat"><span class="dot-yellow">●</span> Désignation détaillée par départ</span>
+        <span class="prestation-feat"><span class="dot-yellow">●</span> Adapté à votre trame DWG</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain constaté sur 100 départs : entre 2h et 3h
+      </div>
+    </div>
+    <div class="prestation-preview yellow-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">auto_bornier.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play yellow">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Schéma de bornier automatique
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 — Synthèse défauts -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag blue"><span class="tag-dot"></span> Automatisation commande</div>
+      <h3>Schéma de synthèse défauts</h3>
+      <p>Réaliser un schéma de synthèse défauts sur une armoire comportant de nombreux départs avec signalisation de défaut (SD) est une tâche aussi chronophage qu'ennuyeuse. Répétitif, source d'erreurs et mentalement épuisant — exactement le type de travail que l'automatisation gère parfaitement à votre place.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-blue">●</span> Génération automatique des SD</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Adapté au nombre de départs</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Fini le copier-coller fastidieux</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain significatif sur les armoires à nombreux départs
+      </div>
+    </div>
+    <div class="prestation-preview blue-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">auto_synthese_defauts.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play blue">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Synthèse défauts automatique
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 — Étiquettes bornier -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag yellow"><span class="tag-dot"></span> Automatisation commande</div>
+      <h3>Attribution d'étiquettes de bornier</h3>
+      <p>Certains de vos clients apprécient des schémas ultra-détaillés pour leurs clients finaux. Grâce à cette automatisation, si tous les départs sont sur bornier haut ou bornier bas, une simple commande attribue automatiquement une étiquette de bornier à chaque départ du schéma. Plus besoin de les saisir un par un.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-yellow">●</span> Bornier haut / bas automatique</span>
+        <span class="prestation-feat"><span class="dot-yellow">●</span> Attribution en une commande</span>
+        <span class="prestation-feat"><span class="dot-yellow">●</span> Schémas détaillés pour client final</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain constaté sur 100 départs : ~10 minutes
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 — Commande sur mesure -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag blue"><span class="tag-dot"></span> Sur mesure</div>
+      <h3>Automatisation de commande personnalisée</h3>
+      <p>Vous avez des parties commande spécifiques à votre activité que vous aimeriez automatiser ? Contactez-nous pour en discuter. Nous analysons ensemble vos besoins et développons des automatisations sur mesure adaptées à votre trame et à vos méthodes de travail. Chaque client est unique, chaque automatisation l'est aussi.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-blue">●</span> Analyse de vos besoins</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Développement sur mesure</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Adapté à votre trame DWG</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ========================================== -->
+<!-- PARTIE 2 : SCHÉMA / PUISSANCE              -->
+<!-- ========================================== -->
+<section class="prestations-section" id="schema">
+
+  <!-- Section Divider: Partie 2 -->
+  <div class="section-divider blue reveal">
+    <div class="divider-number">Partie 2</div>
+    <div class="divider-title">Automatisation schéma / puissance</div>
+    <div class="divider-sub">Remplissage auto · Dessin auto · Données CANECO</div>
+  </div>
+
+  <div class="category-intro reveal">
+    <h3>📐 Automatisation de la partie schéma</h3>
+    <p>La réalisation d'un schéma de puissance est le cœur du travail d'un bureau d'études. Grâce à l'exploitation intelligente des données issues de notes de calcul CANECO et à un codage avancé développé par nos soins, nous automatisons le remplissage et même le dessin de vos schémas. Des heures de travail économisées sur chaque projet.</p>
+    <div class="gain-highlight">⏱️ Gain potentiel : jusqu'à 3h par schéma de 100 départs</div>
+  </div>
+
+  <!-- 1 — Remplissage automatique depuis note de calcul -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag blue"><span class="tag-dot"></span> Automatisation schéma</div>
+      <h3>Remplissage automatique des départs depuis une Note de calcul</h3>
+      <p>Grâce à des fichiers extraits d'une note de calcul CANECO et un codage précis déjà développé par nos soins, toutes les informations des départs ainsi que leurs désignations peuvent être intégrées directement dans un DWG. Il n'y a plus qu'à dessiner — la moitié du travail d'un schéma est déjà faite.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-blue">●</span> Import direct depuis CANECO</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Désignations auto-remplies</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Infos techniques des départs intégrées</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain estimé sur un schéma de 100 départs : ~2 heures
+      </div>
+    </div>
+    <div class="prestation-preview blue-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">auto_remplissage_caneco.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play blue">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Remplissage automatique depuis CANECO
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 — Automatisation de la partie dessin (EN COURS DE DEV) -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="dev-badge">
+        <span class="dev-dot"></span>
+        En cours de développement
+      </div>
+      <div class="prestation-tag blue"><span class="tag-dot"></span> Automatisation schéma</div>
+      <h3>Automatisation de la partie dessin depuis une Note de calcul</h3>
+      <p>Grâce à des mois de développement intensif et à l'exploitation des divers documents générés par CANECO, il sera possible de dessiner en moins de 5 minutes un schéma complet, peu importe le nombre de folios. Une révolution dans la production de schémas électriques qui transformera radicalement votre façon de travailler.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-blue">●</span> Dessin complet automatisé</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Exploite les données CANECO</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Indépendant du nombre de folios</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain estimé sur un schéma de 100 départs : ~1 heure
+      </div>
+    </div>
+    <div class="prestation-preview blue-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">auto_dessin_caneco.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play blue">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Dessin automatique depuis CANECO (bientôt disponible)
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ========================================== -->
+<!-- PARTIE 3 : VÉRIFICATIONS                    -->
+<!-- ========================================== -->
+<section class="prestations-section" id="verifications">
+
+  <!-- Section Divider: Partie 3 -->
+  <div class="section-divider magenta reveal">
+    <div class="divider-number">Partie 3</div>
+    <div class="divider-title">Automatisation des vérifications</div>
+    <div class="divider-sub">Symboles · Incohérences · Sommaires · Reports · TBS</div>
+  </div>
+
+  <div class="category-intro magenta-intro reveal">
+    <h3>🔍 Automatisation des vérifications d'un schéma</h3>
+    <p>Ces automatisations de contrôle ont été initialement développées pour des clients possédant leur propre trame. Chaque prestation est adaptable à la trame du client. Ces exemples sont là pour illustrer nos capacités — il est tout à fait possible de développer du sur-mesure en fonction de vos besoins spécifiques.</p>
+    <div class="gain-highlight magenta-highlight">⏱️ Gain de 30 min à 2h par schéma en vérification</div>
+  </div>
+
+  <!-- 1 — Vérification symboles disjoncteurs -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
+      <h3>Vérification des symboles disjoncteurs / interrupteurs</h3>
+      <p>Quand on saisit manuellement des dizaines et des dizaines de départs, les erreurs sont inévitables : un différentiel oublié, un nombre de pôles incorrect, un symbole qui ne correspond pas aux informations techniques du disjoncteur... Cette automatisation vérifie la cohérence entre chaque symbole et les caractéristiques techniques réelles de l'appareil.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-green">●</span> Vérification des différentiels</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Contrôle du nombre de pôles</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Cohérence symbole / caractéristiques</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain en relecture sur 100 départs : ~30 minutes
+      </div>
+    </div>
+    <div class="prestation-preview yellow-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">ctrl_symboles_disjoncteurs.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play yellow">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Vérification des symboles
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 — Incohérences techniques -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
+      <h3>Vérification des incohérences techniques</h3>
+      <p>Vérifier la cohérence entre le calibre d'un disjoncteur et les seuils de déclenchement du relais thermique, par exemple, est un contrôle essentiel mais fastidieux à réaliser manuellement. Cette automatisation détecte les incohérences techniques pour vous. Du sur-mesure peut être développé en fonction de vos besoins spécifiques — ceci n'est qu'un exemple de ce qui est possible.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-green">●</span> Cohérence calibres / seuils</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Détection d'incohérences</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Sur-mesure possible</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain en relecture sur 100 départs : ~30 minutes
+      </div>
+    </div>
+    <div class="prestation-preview blue-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">ctrl_incoherences_techniques.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play blue">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Vérification des incohérences
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 — Sommaire automatique -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
+      <h3>Sommaire automatique de folio</h3>
+      <p>Créez automatiquement les sommaires de chaque folio en fonction des départs qu'il contient : départs éclairage, départs prises de courant, départs divers, etc. Plus besoin de rédiger et mettre à jour les sommaires à la main — la commande analyse le contenu de chaque folio et génère le sommaire correspondant.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-green">●</span> Analyse automatique des folios</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Classification des départs</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Sommaire généré en un clic</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain en relecture sur 100 départs : ~5 minutes
+      </div>
+    </div>
+    <div class="prestation-preview yellow-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">auto_sommaire_folio.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play yellow">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Sommaire automatique
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 — Report de folio -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
+      <h3>Report de folio automatique</h3>
+      <p>Chaque sous-jeu de barres d'un schéma possède ses propres reports de folio (folio précédent / folio suivant). Nous avons développé une commande qui met à jour automatiquement chaque report de folio sur l'ensemble du schéma. Cela élimine les erreurs et les oublis, et garantit la livraison d'un schéma propre et sans erreur.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-green">●</span> Mise à jour globale des reports</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Folio avant / suivant synchronisés</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Zéro oubli garanti</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain en relecture sur 100 départs : ~5 minutes
+      </div>
+    </div>
+    <div class="prestation-preview blue-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">auto_report_folio.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play blue">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Report de folio automatique
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 — Contrôle barres de terre / TBS -->
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
+      <h3>Contrôle des barres de terre & bornier TBS</h3>
+      <p>Oublier un bornier TBS sur un schéma où des départs éclairage comportent des BAES, c'est le genre d'erreur qui passe facilement inaperçu. Cette automatisation contrôle chaque folio du schéma et s'assure qu'il n'y ait aucun oubli de barre de terre ou de bornier TBS. Un filet de sécurité indispensable.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-green">●</span> Contrôle folio par folio</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Détection des oublis TBS</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Vérification barres de terre</span>
+      </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain en relecture sur 100 départs : ~2 minutes
+      </div>
+    </div>
+    <div class="prestation-preview yellow-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">ctrl_terre_tbs.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play yellow">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Contrôle barres de terre & TBS
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- DEVIS FORM -->
+<section class="form-section" id="devis">
+  <div class="section-header reveal">
+    <div class="section-label">Devis gratuit</div>
+    <div class="brand-divider"></div>
+    <h2 class="section-title">Recevez votre devis sous 24h</h2>
+    <p class="section-subtitle">Décrivez vos besoins, on revient vers vous rapidement avec une proposition adaptée à votre trame.</p>
+  </div>
+  <div class="devis-form reveal">
+    <form id="devisForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom / Entreprise *</label>
+          <input type="text" name="nom" placeholder="Ex : SMP Élec" required>
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" name="email" placeholder="contact@votreentreprise.fr" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="tel" name="telephone" placeholder="06 XX XX XX XX">
+        </div>
+        <div class="form-group">
+          <label>Type d'automatisation</label>
+          <select name="type">
+            <option value="">Sélectionnez...</option>
+            <option>Schéma de bornier automatique</option>
+            <option>Synthèse défauts automatique</option>
+            <option>Étiquettes de bornier</option>
+            <option>Remplissage auto depuis note de calcul</option>
+            <option>Dessin auto depuis note de calcul</option>
+            <option>Vérification symboles disjoncteurs</option>
+            <option>Vérification incohérences techniques</option>
+            <option>Sommaire automatique de folio</option>
+            <option>Report de folio automatique</option>
+            <option>Contrôle barres de terre / TBS</option>
+            <option>Automatisation sur mesure</option>
+            <option>Autre</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group full">
+          <label>Décrivez votre besoin *</label>
+          <textarea name="message" placeholder="Décrivez votre trame, le type de schémas, le nombre de départs moyen, les automatisations qui vous intéressent..."></textarea>
+        </div>
+      </div>
+      <div class="form-submit">
+        <button type="submit" class="btn-primary btn-yellow">
+          Envoyer ma demande <span class="arrow">→</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-box reveal">
+    <h2>Envie de gagner du temps<br>sur vos schémas <span class="text-yellow">AutoCAD</span> ?</h2>
+    <p>Appelez-nous directement ou envoyez votre demande. Devis gratuit, réponse sous 24h, automatisation adaptée à votre trame.</p>
+    <a href="tel:+33646383587" class="btn-primary">
+      Appeler maintenant <span class="arrow">→</span>
+    </a>
+    <div class="cta-guarantees">
+      <span class="cta-guarantee"><span class="check">✓</span> Devis gratuit</span>
+      <span class="cta-guarantee"><span class="check">✓</span> Sur mesure</span>
+      <span class="cta-guarantee"><span class="check">✓</span> Homologué AutoCAD 2026</span>
+      <span class="cta-guarantee"><span class="check">✓</span> Format DWG natif</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">© 2026 RES ELEC — Automatisations AutoCAD</div>
+  <div class="footer-right">
+    <a href="mailto:romain_franco@hotmail.fr">Email</a>
+    <a href="tel:+33646383587">06 46 38 35 87</a>
+    <a href="#">Mentions légales</a>
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT BUTTON -->
+<div class="floating-contact" id="floatingContact">
+  <div class="floating-contact-expanded">
+    <a href="tel:+33646383587" class="floating-option">
+      <span class="opt-icon phone">📞</span>
+      Appeler directement
+    </a>
+    <a href="mailto:romain_franco@hotmail.fr" class="floating-option">
+      <span class="opt-icon mail">✉️</span>
+      Envoyer un email
+    </a>
+    <a href="#devis" class="floating-option" id="floatingDevis">
+      <span class="opt-icon phone">📋</span>
+      Demander un devis
+    </a>
+  </div>
+  <button class="floating-btn" id="floatingBtn" aria-label="Nous contacter">
+    <span class="btn-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+      </svg>
+    </span>
+  </button>
+</div>
+
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), index * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Nav shrink on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+      nav.style.padding = '6px 40px';
+    } else {
+      nav.style.borderBottomColor = 'rgba(255,255,255,0.04)';
+      nav.style.padding = '10px 40px';
+    }
+  });
+
+  // Video hover play
+  document.querySelectorAll('.prestation-preview').forEach(container => {
+    const video = container.querySelector('video');
+    if (video) {
+      container.addEventListener('mouseenter', () => video.play().catch(() => {}));
+      container.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+    }
+  });
+
+  // Form submission
+  document.getElementById('devisForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const nom = formData.get('nom');
+    const email = formData.get('email');
+    const telephone = formData.get('telephone');
+    const type = formData.get('type');
+    const message = formData.get('message');
+
+    const subject = encodeURIComponent('Demande de devis automatisation AutoCAD — ' + nom);
+    const body = encodeURIComponent(
+      'Nom / Entreprise : ' + nom + '\n' +
+      'Email : ' + email + '\n' +
+      'Téléphone : ' + telephone + '\n' +
+      'Type d\'automatisation : ' + type + '\n\n' +
+      'Message :\n' + message
+    );
+
+    window.location.href = 'mailto:romain_franco@hotmail.fr?subject=' + subject + '&body=' + body;
+    alert('Merci pour votre demande ! Votre client mail va s\'ouvrir. Nous vous recontactons sous 24h.');
+  });
+
+  // Floating contact toggle
+  const floatingContact = document.getElementById('floatingContact');
+  const floatingBtn = document.getElementById('floatingBtn');
+  const floatingDevis = document.getElementById('floatingDevis');
+
+  floatingBtn.addEventListener('click', () => {
+    floatingContact.classList.toggle('open');
+  });
+
+  floatingDevis.addEventListener('click', () => {
+    floatingContact.classList.remove('open');
+  });
+
+  // Active nav tab highlight on scroll
+  const sections = ['commande', 'schema', 'verifications'];
+  const navTabs = document.querySelectorAll('.nav-tab');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(id => {
+      const section = document.getElementById(id);
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 150) current = id;
+      }
+    });
+    navTabs.forEach(tab => {
+      const href = tab.getAttribute('href').replace('#', '');
+      if (href === current) {
+        tab.style.transform = 'scale(1.05)';
+        tab.style.boxShadow = '0 0 12px rgba(255,255,255,0.06)';
+      } else {
+        tab.style.transform = 'scale(1)';
+        tab.style.boxShadow = 'none';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
