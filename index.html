@@ -955,6 +955,9 @@
     margin-top: 6px;
     letter-spacing: 1px;
   }
+  .section-divider.yellow .divider-sub { color: var(--brand-blue-light); }
+  .section-divider.blue .divider-sub { color: var(--brand-yellow); }
+  .section-divider.magenta .divider-sub { color: var(--text-primary); }
   @media (max-width: 768px) {
     .section-divider { margin: 48px 0 28px; padding: 28px 0; }
     .section-divider .divider-title { font-size: 1.2rem; }
@@ -1928,7 +1931,7 @@
 <footer>
   <div class="footer-left">© 2026 RES ELEC — Automatisations AutoCAD</div>
   <div class="footer-right">
-    <a href="mailto:romain_franco@hotmail.fr">Email</a>
+    <a href="/cdn-cgi/l/email-protection#483a2725292126172e3a29262b270820273c25292124662e3a">Email</a>
     <a href="tel:+33646383587">06 46 38 35 87</a>
     <a href="#">Mentions légales</a>
   </div>
@@ -1941,7 +1944,7 @@
       <span class="opt-icon phone">📞</span>
       Appeler directement
     </a>
-    <a href="mailto:romain_franco@hotmail.fr" class="floating-option">
+    <a href="/cdn-cgi/l/email-protection#bcced3d1ddd5d2e3daceddd2dfd3fcd4d3c8d1ddd5d092dace" class="floating-option">
       <span class="opt-icon mail">✉️</span>
       Envoyer un email
     </a>
@@ -1959,7 +1962,7 @@
   </button>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Reveal on scroll
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
@@ -2054,14 +2057,4 @@
       const href = tab.getAttribute('href').replace('#', '');
       if (href === current) {
         tab.style.transform = 'scale(1.05)';
-        tab.style.boxShadow = '0 0 12px rgba(255,255,255,0.06)';
-      } else {
-        tab.style.transform = 'scale(1)';
-        tab.style.boxShadow = 'none';
-      }
-    });
-  });
-</script>
-
-</body>
-</html>
+       
