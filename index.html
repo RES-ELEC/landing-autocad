@@ -181,7 +181,6 @@
     white-space: nowrap;
   }
 
-  /* New nav with 3 rubrics */
   .nav-center {
     display: flex;
     flex-direction: column;
@@ -237,6 +236,15 @@
   .nav-tab.tab-verif:hover {
     background: rgba(224, 64, 160, 0.12);
     border-color: rgba(224, 64, 160, 0.25);
+  }
+  .nav-tab.tab-fonctionnement {
+    color: var(--accent-green);
+    background: rgba(16, 185, 129, 0.06);
+    border-color: rgba(16, 185, 129, 0.12);
+  }
+  .nav-tab.tab-fonctionnement:hover {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.25);
   }
   .nav-tab-sep {
     width: 1px;
@@ -602,44 +610,187 @@
     .floating-btn { width: 54px; height: 54px; }
   }
 
-  /* ============ PAIN POINTS / AVANTAGES ============ */
-  .pain-section {
+  /* ============ PROCESS STEPS ============ */
+  .process-section {
     padding: 100px 40px;
     max-width: 1100px;
     margin: 0 auto;
   }
-  .pain-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    max-width: 1000px;
+  .process-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 860px;
     margin: 0 auto;
+    position: relative;
   }
-  .pain-card {
+  /* Vertical connecting line */
+  .process-timeline::before {
+    content: '';
+    position: absolute;
+    left: 36px;
+    top: 40px;
+    bottom: 40px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--brand-blue), var(--brand-yellow), var(--accent-green));
+    opacity: 0.25;
+    border-radius: 2px;
+  }
+  .process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 28px 0;
+    position: relative;
+    z-index: 1;
+  }
+  .step-indicator {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .step-indicator .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  .step-indicator .step-icon {
+    font-size: 1.6rem;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+  }
+  .step-indicator.step-blue {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(37, 99, 235, 0.05));
+    border: 1.5px solid rgba(37, 99, 235, 0.3);
+  }
+  .step-indicator.step-blue .step-num { color: var(--brand-blue-light); }
+  .step-indicator.step-yellow {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(234, 179, 8, 0.05));
+    border: 1.5px solid rgba(234, 179, 8, 0.3);
+  }
+  .step-indicator.step-yellow .step-num { color: var(--brand-yellow); }
+  .step-indicator.step-green {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    border: 1.5px solid rgba(16, 185, 129, 0.3);
+  }
+  .step-indicator.step-green .step-num { color: var(--accent-green); }
+  .step-indicator.step-magenta {
+    background: linear-gradient(135deg, rgba(224, 64, 160, 0.15), rgba(224, 64, 160, 0.05));
+    border: 1.5px solid rgba(224, 64, 160, 0.3);
+  }
+  .step-indicator.step-magenta .step-num { color: var(--brand-magenta); }
+
+  .step-content {
+    flex: 1;
+    min-width: 0;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 36px;
+    padding: 28px 32px;
     transition: all 0.4s;
     position: relative;
     overflow: hidden;
   }
-  .pain-card::before {
+  .step-content::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--gradient-warm);
+    top: 0; left: 0;
+    width: 3px; height: 100%;
     opacity: 0;
     transition: opacity 0.4s;
   }
-  .pain-card:hover { border-color: rgba(234,179,8,0.15); transform: translateY(-4px); }
-  .pain-card:hover::before { opacity: 1; }
-  .pain-card.blue-accent::before { background: var(--gradient-brand); }
-  .pain-card.blue-accent:hover { border-color: rgba(37,99,235,0.15); }
-  .pain-emoji { font-size: 2rem; margin-bottom: 20px; display: block; }
-  .pain-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
-  .pain-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; }
+  .step-content:hover { border-color: var(--border-hover); transform: translateX(4px); }
+  .step-content:hover::before { opacity: 1; }
+  .step-content.border-blue::before { background: var(--gradient-brand); }
+  .step-content.border-yellow::before { background: var(--gradient-warm); }
+  .step-content.border-green::before { background: linear-gradient(to bottom, var(--accent-green), #059669); }
+  .step-content.border-magenta::before { background: linear-gradient(to bottom, var(--brand-magenta), var(--brand-magenta-light)); }
+  .step-content h3 {
+    font-size: 1.12rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .step-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .step-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .step-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.3px;
+  }
+  .step-tag .tag-icon { font-size: 0.85rem; }
+
+  /* Arrow connector between steps */
+  .step-arrow {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 28px;
+    height: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .step-arrow svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.2;
+  }
+
+  /* Free badge */
+  .step-free {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.04));
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: var(--accent-green);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 768px) {
+    .process-section { padding: 60px 20px; }
+    .process-timeline::before { left: 24px; }
+    .step-indicator { width: 48px; height: 48px; border-radius: 12px; }
+    .step-indicator .step-num { font-size: 1rem; }
+    .step-indicator .step-icon { font-size: 1.1rem; top: -4px; right: -4px; }
+    .step-content { padding: 20px; }
+    .step-content h3 { font-size: 1rem; }
+    .process-step { gap: 16px; padding: 20px 0; }
+    .step-tags { flex-direction: column; }
+  }
 
   /* ============ PRESTATIONS / AUTOMATISATIONS ============ */
   .prestations-section {
@@ -1027,7 +1178,6 @@
     text-align: center;
     position: relative;
     overflow: hidden;
-    /* Gradient border trick */
     background-clip: padding-box;
     isolation: isolate;
   }
@@ -1087,11 +1237,11 @@
     box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
   }
 
-  /* ============ SOFTWARE INTRO ============ */
+  /* ============ SOFTWARE INTRO (category-intro style) ============ */
   .software-intro {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(16, 19, 28, 0.95), rgba(12, 15, 23, 0.98));
+    border: none;
+    border-radius: 20px;
     padding: 48px;
     margin-bottom: 64px;
     display: flex;
@@ -1099,13 +1249,20 @@
     align-items: center;
     position: relative;
     overflow: hidden;
+    background-clip: padding-box;
+    isolation: isolate;
   }
   .software-intro::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
     background: linear-gradient(90deg, var(--brand-blue), var(--brand-yellow), var(--brand-magenta));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
   }
   .software-intro-content {
     flex: 1;
@@ -1342,14 +1499,13 @@
     .nav-center { display: none; }
     .hero { padding: 120px 24px 80px; }
     .trust-bar { flex-direction: column; gap: 24px; }
-    .pain-section, .prestations-section,
+    .process-section, .prestations-section,
     .cta-section, .form-section { padding: 40px 20px; }
     .cta-box { padding: 48px 28px; }
     .devis-form { padding: 32px 24px; }
     .form-row { grid-template-columns: 1fr; }
     .hero-buttons { flex-direction: column; align-items: center; }
     .prestation-features { flex-direction: column; }
-    .pain-grid { grid-template-columns: 1fr; }
     .category-intro { padding: 28px 24px; }
     footer { flex-direction: column; text-align: center; }
   }
@@ -1379,6 +1535,8 @@
       <a href="#schema" class="nav-tab tab-schema">Partie schéma / puissance</a>
       <span class="nav-tab-sep"></span>
       <a href="#verifications" class="nav-tab tab-verif">Partie vérification</a>
+      <span class="nav-tab-sep"></span>
+      <a href="#fonctionnement" class="nav-tab tab-fonctionnement">Notre fonctionnement</a>
     </div>
   </div>
   <div class="nav-right">
@@ -1410,8 +1568,8 @@
   </p>
 
   <div class="hero-buttons">
-    <a href="#devis" class="btn-primary btn-yellow">
-      Demander un devis gratuit <span class="arrow">→</span>
+    <a href="#fonctionnement" class="btn-primary">
+      Demande de rendez-vous gratuit <span class="arrow">→</span>
     </a>
     <a href="#commande" class="btn-secondary">Voir nos automatisations</a>
   </div>
@@ -1434,33 +1592,6 @@
   </div>
 </section>
 
-<!-- CONSTAT / AVANTAGES -->
-<section class="pain-section">
-  <div class="section-header reveal">
-    <div class="section-label yellow">Pourquoi automatiser ?</div>
-    <div class="brand-divider"></div>
-    <h2 class="section-title">Vos schémas méritent mieux</h2>
-    <p class="section-subtitle">Un schéma de 100 départs réalisé à la main, c'est des heures de travail répétitif et un risque d'erreur à chaque ligne.</p>
-  </div>
-  <div class="pain-grid">
-    <div class="pain-card reveal">
-      <span class="pain-emoji">⏱️</span>
-      <h3>Des heures perdues en tâches répétitives</h3>
-      <p>Borniers, synthèses défauts, reports de folio... Ces tâches chronophages consomment un temps précieux qui pourrait être mieux investi.</p>
-    </div>
-    <div class="pain-card blue-accent reveal">
-      <span class="pain-emoji">🎯</span>
-      <h3>Zéro erreur, zéro oubli</h3>
-      <p>Nos automatisations produisent des schémas impeccables et sans fautes. Là où un être humain peut se tromper avec la fatigue ou le temps passé sur un long schéma, l'automatisation reste infaillible.</p>
-    </div>
-    <div class="pain-card reveal">
-      <span class="pain-emoji">🔧</span>
-      <h3>Du 100% sur mesure</h3>
-      <p>Chaque automatisation est adaptée à votre trame DWG, vos conventions de dessin et vos exigences métier. Pas de solution générique.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ============ AUTOMATISATIONS ============ -->
 
 <!-- ========================================== -->
@@ -1474,7 +1605,7 @@
     <p class="section-subtitle">Des commandes automatisées pour la partie qualitative, la partie schéma/puissance, et des contrôles intelligents pour des schémas sans erreur.</p>
   </div>
 
-  <!-- Software intro -->
+  <!-- Software intro — styled like category-intro -->
   <div class="software-intro reveal">
     <div class="software-intro-content">
       <div class="software-intro-icon">🖥️</div>
@@ -1504,7 +1635,6 @@
     <div class="prestation-header">
       <div class="prestation-tag yellow"><span class="tag-dot"></span> Automatisation commande</div>
       <h3>Schéma de bornier automatique</h3>
-      <p>Lors de la création d'un schéma pour une nouvelle armoire, générez automatiquement l'intégralité du schéma de bornier. Chaque bloc de bornier est créé avec sa désignation complète et le détail de chacun des départs — plus besoin de tout saisir à la main.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-yellow">●</span> Blocs de bornier auto-générés</span>
         <span class="prestation-feat"><span class="dot-yellow">●</span> Désignation détaillée par départ</span>
@@ -1512,7 +1642,7 @@
       </div>
       <div class="gain-badge">
         <span class="clock-icon">⏱️</span>
-        Gain constaté sur 100 départs : entre 2h et 3h
+        Gain constaté sur un schéma de 100 départs : entre 2h et 3h
       </div>
     </div>
     <div class="prestation-preview yellow-glow">
@@ -1540,7 +1670,6 @@
     <div class="prestation-header">
       <div class="prestation-tag blue"><span class="tag-dot"></span> Automatisation commande</div>
       <h3>Schéma de synthèse défauts</h3>
-      <p>Réaliser un schéma de synthèse défauts sur une armoire comportant de nombreux départs avec signalisation de défaut (SD) est une tâche aussi chronophage qu'ennuyeuse. Répétitif, source d'erreurs et mentalement épuisant — exactement le type de travail que l'automatisation gère parfaitement à votre place.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-blue">●</span> Génération automatique des SD</span>
         <span class="prestation-feat"><span class="dot-blue">●</span> Adapté au nombre de départs</span>
@@ -1576,7 +1705,6 @@
     <div class="prestation-header">
       <div class="prestation-tag yellow"><span class="tag-dot"></span> Automatisation commande</div>
       <h3>Attribution d'étiquettes de bornier</h3>
-      <p>Certains de vos clients apprécient des schémas ultra-détaillés pour leurs clients finaux. Grâce à cette automatisation, si tous les départs sont sur bornier haut ou bornier bas, une simple commande attribue automatiquement une étiquette de bornier à chaque départ du schéma. Plus besoin de les saisir un par un.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-yellow">●</span> Bornier haut / bas automatique</span>
         <span class="prestation-feat"><span class="dot-yellow">●</span> Attribution en une commande</span>
@@ -1584,12 +1712,30 @@
       </div>
       <div class="gain-badge">
         <span class="clock-icon">⏱️</span>
-        Gain constaté sur 100 départs : ~10 minutes
+        Gain constaté sur un schéma de 100 départs : ~10 minutes
+      </div>
+    </div>
+    <div class="prestation-preview yellow-glow">
+      <div class="preview-toolbar">
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-dot"></span>
+        <span class="toolbar-title">auto_etiquettes_bornier.dwg — AutoCAD 2026</span>
+      </div>
+      <div class="preview-content">
+        <div class="preview-grid"></div>
+        <div class="preview-play yellow">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="preview-hint">
+          <div class="scroll-icon"><span></span></div>
+          Voir la démo — Attribution d'étiquettes de bornier
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- 4 — Commande sur mesure -->
+  <!-- 4 — Commande sur mesure (GARDE LE TEXTE) -->
   <div class="prestation-block reveal">
     <div class="prestation-header">
       <div class="prestation-tag blue"><span class="tag-dot"></span> Sur mesure</div>
@@ -1628,7 +1774,6 @@
     <div class="prestation-header">
       <div class="prestation-tag blue"><span class="tag-dot"></span> Automatisation schéma</div>
       <h3>Remplissage automatique des départs depuis une Note de calcul</h3>
-      <p>Grâce à des fichiers extraits d'une note de calcul CANECO et un codage précis déjà développé par nos soins, toutes les informations des départs ainsi que leurs désignations peuvent être intégrées directement dans un DWG. Il n'y a plus qu'à dessiner — la moitié du travail d'un schéma est déjà faite.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-blue">●</span> Import direct depuis CANECO</span>
         <span class="prestation-feat"><span class="dot-blue">●</span> Désignations auto-remplies</span>
@@ -1668,7 +1813,6 @@
       </div>
       <div class="prestation-tag blue"><span class="tag-dot"></span> Automatisation schéma</div>
       <h3>Automatisation de la partie dessin depuis une Note de calcul</h3>
-      <p>Grâce à des mois de développement intensif et à l'exploitation des divers documents générés par CANECO, il sera possible de dessiner en moins de 5 minutes un schéma complet, peu importe le nombre de folios. Une révolution dans la production de schémas électriques qui transformera radicalement votre façon de travailler.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-blue">●</span> Dessin complet automatisé</span>
         <span class="prestation-feat"><span class="dot-blue">●</span> Exploite les données CANECO</span>
@@ -1724,7 +1868,6 @@
     <div class="prestation-header">
       <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
       <h3>Vérification des symboles disjoncteurs / interrupteurs</h3>
-      <p>Quand on saisit manuellement des dizaines et des dizaines de départs, les erreurs sont inévitables : un différentiel oublié, un nombre de pôles incorrect, un symbole qui ne correspond pas aux informations techniques du disjoncteur... Cette automatisation vérifie la cohérence entre chaque symbole et les caractéristiques techniques réelles de l'appareil.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-green">●</span> Vérification des différentiels</span>
         <span class="prestation-feat"><span class="dot-green">●</span> Contrôle du nombre de pôles</span>
@@ -1732,7 +1875,7 @@
       </div>
       <div class="gain-badge">
         <span class="clock-icon">⏱️</span>
-        Gain en relecture sur 100 départs : ~30 minutes
+        Gain en relecture sur un schéma de 100 départs : ~30 minutes
       </div>
     </div>
     <div class="prestation-preview yellow-glow">
@@ -1760,7 +1903,6 @@
     <div class="prestation-header">
       <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
       <h3>Vérification des incohérences techniques</h3>
-      <p>Vérifier la cohérence entre le calibre d'un disjoncteur et les seuils de déclenchement du relais thermique, par exemple, est un contrôle essentiel mais fastidieux à réaliser manuellement. Cette automatisation détecte les incohérences techniques pour vous. Du sur-mesure peut être développé en fonction de vos besoins spécifiques — ceci n'est qu'un exemple de ce qui est possible.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-green">●</span> Cohérence calibres / seuils</span>
         <span class="prestation-feat"><span class="dot-green">●</span> Détection d'incohérences</span>
@@ -1768,7 +1910,7 @@
       </div>
       <div class="gain-badge">
         <span class="clock-icon">⏱️</span>
-        Gain en relecture sur 100 départs : ~30 minutes
+        Gain en relecture sur un schéma de 100 départs : ~30 minutes
       </div>
     </div>
     <div class="prestation-preview blue-glow">
@@ -1796,7 +1938,6 @@
     <div class="prestation-header">
       <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
       <h3>Sommaire automatique de folio</h3>
-      <p>Créez automatiquement les sommaires de chaque folio en fonction des départs qu'il contient : départs éclairage, départs prises de courant, départs divers, etc. Plus besoin de rédiger et mettre à jour les sommaires à la main — la commande analyse le contenu de chaque folio et génère le sommaire correspondant.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-green">●</span> Analyse automatique des folios</span>
         <span class="prestation-feat"><span class="dot-green">●</span> Classification des départs</span>
@@ -1804,7 +1945,7 @@
       </div>
       <div class="gain-badge">
         <span class="clock-icon">⏱️</span>
-        Gain en relecture sur 100 départs : ~5 minutes
+        Gain en relecture sur un schéma de 100 départs : ~5 minutes
       </div>
     </div>
     <div class="prestation-preview yellow-glow">
@@ -1832,7 +1973,6 @@
     <div class="prestation-header">
       <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
       <h3>Report de folio automatique</h3>
-      <p>Chaque sous-jeu de barres d'un schéma possède ses propres reports de folio (folio précédent / folio suivant). Nous avons développé une commande qui met à jour automatiquement chaque report de folio sur l'ensemble du schéma. Cela élimine les erreurs et les oublis, et garantit la livraison d'un schéma propre et sans erreur.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-green">●</span> Mise à jour globale des reports</span>
         <span class="prestation-feat"><span class="dot-green">●</span> Folio avant / suivant synchronisés</span>
@@ -1840,7 +1980,7 @@
       </div>
       <div class="gain-badge">
         <span class="clock-icon">⏱️</span>
-        Gain en relecture sur 100 départs : ~5 minutes
+        Gain en relecture sur un schéma de 100 départs : ~5 minutes
       </div>
     </div>
     <div class="prestation-preview blue-glow">
@@ -1868,7 +2008,6 @@
     <div class="prestation-header">
       <div class="prestation-tag green"><span class="tag-dot"></span> Vérification automatisée</div>
       <h3>Contrôle des barres de terre & bornier TBS</h3>
-      <p>Oublier un bornier TBS sur un schéma où des départs éclairage comportent des BAES, c'est le genre d'erreur qui passe facilement inaperçu. Cette automatisation contrôle chaque folio du schéma et s'assure qu'il n'y ait aucun oubli de barre de terre ou de bornier TBS. Un filet de sécurité indispensable.</p>
       <div class="prestation-features">
         <span class="prestation-feat"><span class="dot-green">●</span> Contrôle folio par folio</span>
         <span class="prestation-feat"><span class="dot-green">●</span> Détection des oublis TBS</span>
@@ -1876,7 +2015,7 @@
       </div>
       <div class="gain-badge">
         <span class="clock-icon">⏱️</span>
-        Gain en relecture sur 100 départs : ~2 minutes
+        Gain en relecture sur un schéma de 100 départs : ~2 minutes
       </div>
     </div>
     <div class="prestation-preview yellow-glow">
@@ -1899,6 +2038,106 @@
     </div>
   </div>
 
+</section>
+
+<!-- ========================================== -->
+<!-- NOTRE FONCTIONNEMENT                       -->
+<!-- ========================================== -->
+<section class="process-section" id="fonctionnement">
+  <div class="section-header reveal">
+    <div class="section-label yellow">Comment ça marche ?</div>
+    <div class="brand-divider"></div>
+    <h2 class="section-title">Notre fonctionnement, étape par étape</h2>
+    <p class="section-subtitle">De la prise de contact à la livraison de votre logiciel, un processus clair et transparent pour des automatisations qui vous correspondent.</p>
+  </div>
+
+  <div class="process-timeline">
+
+    <!-- Étape 1 -->
+    <div class="process-step reveal">
+      <div class="step-indicator step-blue">
+        <span class="step-num">01</span>
+        <span class="step-icon">📞</span>
+      </div>
+      <div class="step-content border-blue">
+        <h3>Premier rendez-vous <span class="step-free">Gratuit</span></h3>
+        <p>Un échange en visioconférence avec partage d'écran pour comprendre vos besoins, votre façon de travailler et vos attentes en matière d'automatisation.</p>
+        <div class="step-tags">
+          <span class="step-tag"><span class="tag-icon">🎥</span> Visioconférence</span>
+          <span class="step-tag"><span class="tag-icon">🖥️</span> Partage d'écran</span>
+          <span class="step-tag"><span class="tag-icon">🎯</span> Analyse de vos besoins</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Étape 2 -->
+    <div class="process-step reveal">
+      <div class="step-indicator step-yellow">
+        <span class="step-num">02</span>
+        <span class="step-icon">🔍</span>
+      </div>
+      <div class="step-content border-yellow">
+        <h3>Analyse de votre trame de schéma</h3>
+        <p>Nous étudions en détail votre trame DWG : blocs dynamiques, structure des folios, blocothèque de symboles. On comprend comment votre trame fonctionne pour construire des automatisations parfaitement compatibles.</p>
+        <div class="step-tags">
+          <span class="step-tag"><span class="tag-icon">📐</span> Blocs & structure</span>
+          <span class="step-tag"><span class="tag-icon">📁</span> Blocothèque</span>
+          <span class="step-tag"><span class="tag-icon">⚙️</span> Propriétés dynamiques</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Étape 3 -->
+    <div class="process-step reveal">
+      <div class="step-indicator step-magenta">
+        <span class="step-num">03</span>
+        <span class="step-icon">💡</span>
+      </div>
+      <div class="step-content border-magenta">
+        <h3>Conseils & optimisation de vos processus</h3>
+        <p>Avant même de coder, on vous conseille sur les optimisations possibles de vos processus de création de schéma. L'objectif : maximiser le gain de temps et la fiabilité de vos livrables.</p>
+        <div class="step-tags">
+          <span class="step-tag"><span class="tag-icon">🚀</span> Optimisation workflow</span>
+          <span class="step-tag"><span class="tag-icon">📋</span> Recommandations</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Étape 4 -->
+    <div class="process-step reveal">
+      <div class="step-indicator step-blue">
+        <span class="step-num">04</span>
+        <span class="step-icon">📄</span>
+      </div>
+      <div class="step-content border-blue">
+        <h3>Proposition d'automatisation sur mesure</h3>
+        <p>On vous présente une proposition détaillée des automatisations adaptées à vos trames et à vos besoins, avec les gains de temps estimés pour chaque commande.</p>
+        <div class="step-tags">
+          <span class="step-tag"><span class="tag-icon">📊</span> Devis détaillé</span>
+          <span class="step-tag"><span class="tag-icon">⏱️</span> Gains estimés</span>
+          <span class="step-tag"><span class="tag-icon">🎯</span> 100% sur mesure</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Étape 5 -->
+    <div class="process-step reveal">
+      <div class="step-indicator step-green">
+        <span class="step-num">05</span>
+        <span class="step-icon">✅</span>
+      </div>
+      <div class="step-content border-green">
+        <h3>Livraison de votre logiciel</h3>
+        <p>Votre logiciel d'automatisation est livré clé en main, avec chacune de vos commandes intégrées. Chaque automatisation est testée et fiabilisée sur plusieurs schémas types en reprenant votre propre trame.</p>
+        <div class="step-tags">
+          <span class="step-tag"><span class="tag-icon">🖥️</span> Logiciel clé en main</span>
+          <span class="step-tag"><span class="tag-icon">🧪</span> Testé & fiabilisé</span>
+          <span class="step-tag"><span class="tag-icon">📦</span> Prêt à l'emploi</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <!-- DEVIS FORM -->
@@ -1981,7 +2220,7 @@
 <footer>
   <div class="footer-left">© 2026 RES ELEC — Automatisations AutoCAD</div>
   <div class="footer-right">
-    <a href="/cdn-cgi/l/email-protection#483a2725292126172e3a29262b270820273c25292124662e3a">Email</a>
+    <a href="mailto:romain_franco@hotmail.fr">Email</a>
     <a href="tel:+33646383587">06 46 38 35 87</a>
     <a href="#">Mentions légales</a>
   </div>
@@ -1994,7 +2233,7 @@
       <span class="opt-icon phone">📞</span>
       Appeler directement
     </a>
-    <a href="/cdn-cgi/l/email-protection#bcced3d1ddd5d2e3daceddd2dfd3fcd4d3c8d1ddd5d092dace" class="floating-option">
+    <a href="mailto:romain_franco@hotmail.fr" class="floating-option">
       <span class="opt-icon mail">✉️</span>
       Envoyer un email
     </a>
@@ -2012,7 +2251,7 @@
   </button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // Reveal on scroll
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
@@ -2114,7 +2353,7 @@
   });
 
   // Active nav tab highlight on scroll
-  const sections = ['commande', 'schema', 'verifications'];
+  const sections = ['commande', 'schema', 'verifications', 'fonctionnement'];
   const navTabs = document.querySelectorAll('.nav-tab');
 
   window.addEventListener('scroll', () => {
