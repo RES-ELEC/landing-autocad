@@ -477,11 +477,86 @@
     background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);
   }
   .hero-card.card-visible {
-    animation: cardReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: cardReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+  .hero-card.card-visible .hero-card-icon,
+  .hero-card.card-visible .hero-card-number,
+  .hero-card.card-visible .hero-card-text,
+  .hero-card.card-visible .hero-card-logos {
+    animation: cardChildFade 0.6s ease-out 0.3s both;
+  }
+  .hero-card.card-visible .hero-card-number { animation-delay: 0.4s; }
+  .hero-card.card-visible .hero-card-text { animation-delay: 0.5s; }
+  .hero-card.card-visible .hero-card-logos { animation-delay: 0.6s; }
+
   @keyframes cardReveal {
-    0% { opacity: 0; transform: translateY(24px) scale(0.96); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+    0% {
+      opacity: 0;
+      transform: translateY(30px) scale(0.92);
+    }
+    40% {
+      opacity: 1;
+      transform: translateY(-4px) scale(1.01);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes cardChildFade {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Glow sweep on reveal */
+  .hero-card .card-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-card:first-child .card-glow {
+    background: radial-gradient(ellipse at 50% 30%, rgba(234,179,8,0.18), transparent 70%);
+  }
+  .hero-card:nth-child(2) .card-glow {
+    background: radial-gradient(ellipse at 50% 30%, rgba(37,99,235,0.18), transparent 70%);
+  }
+  .hero-card:last-child .card-glow {
+    background: radial-gradient(ellipse at 50% 30%, rgba(16,185,129,0.18), transparent 70%);
+  }
+  .hero-card.card-visible .card-glow {
+    animation: glowPulse 1.8s ease-out forwards;
+  }
+  @keyframes glowPulse {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* Shimmer line sweep */
+  .hero-card .card-shimmer {
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-card.card-visible .card-shimmer {
+    animation: shimmerSweep 1.2s ease-out 0.2s forwards;
+  }
+  @keyframes shimmerSweep {
+    0% { left: -50%; }
+    100% { left: 150%; }
+  }
+
+  /* Children start hidden */
+  .hero-card .hero-card-icon,
+  .hero-card .hero-card-number,
+  .hero-card .hero-card-text,
+  .hero-card .hero-card-logos {
+    opacity: 0;
   }
   .hero-card::before {
     content: '';
@@ -1668,17 +1743,6 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">
-    <span class="badge-icon">
-      <span class="badge-bolt">⚡</span>
-    </span>
-    <span class="badge-separator"></span>
-    <span class="badge-text"><span style="color:var(--brand-yellow)">Automatisations</span> <span style="color:var(--brand-blue-light)">AutoCAD</span></span>
-  </div>
-
-  <div class="hero-logo" style="margin-bottom:32px; animation: fadeInUp 0.8s ease-out 0.05s both;">
-    <img src="logo-reselec.png" alt="RES ELEC" style="height:80px;width:auto;" onerror="this.outerHTML='<div style=\'height:80px;padding:0 32px;background:linear-gradient(135deg,var(--brand-blue),var(--brand-yellow));border-radius:16px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:1.6rem;color:white;letter-spacing:-0.5px;\'>RES ELEC</div>';">
-  </div>
 
   <h1>
     Automatisez jusqu'à <span class="text-yellow">80%</span> des tâches<br>
@@ -1699,6 +1763,8 @@
   <div class="hero-cards" id="heroCards">
     <!-- Card 1 -->
     <div class="hero-card">
+      <div class="card-glow"></div>
+      <div class="card-shimmer"></div>
       <div class="hero-card-icon icon-yellow">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><polyline points="7 10 10 13 17 8"/>
@@ -1709,6 +1775,8 @@
     </div>
     <!-- Card 2 -->
     <div class="hero-card">
+      <div class="card-glow"></div>
+      <div class="card-shimmer"></div>
       <div class="hero-card-icon icon-blue">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
@@ -1718,6 +1786,8 @@
     </div>
     <!-- Card 3 -->
     <div class="hero-card">
+      <div class="card-glow"></div>
+      <div class="card-shimmer"></div>
       <div class="hero-card-icon icon-green">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
@@ -2405,7 +2475,7 @@
       if (entry.isIntersecting) {
         const cards = entry.target.querySelectorAll('.hero-card');
         cards.forEach((card, i) => {
-          setTimeout(() => card.classList.add('card-visible'), i * 2000);
+          setTimeout(() => card.classList.add('card-visible'), i * 1000);
         });
         heroCardsObserver.unobserve(entry.target);
       }
