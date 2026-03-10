@@ -185,145 +185,105 @@
     display: flex;
     align-items: center;
   }
-  .nav-box-wrapper {
+  .nav-hub {
     display: flex;
     align-items: center;
     gap: 16px;
+    background: linear-gradient(165deg, rgba(15, 12, 8, 0.95), rgba(10, 8, 5, 0.98));
+    border: 1px solid rgba(234, 179, 8, 0.18);
+    border-radius: 50px;
+    padding: 6px 8px 6px 22px;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 1px rgba(234, 179, 8, 0.25);
   }
-  .nav-box {
-    display: flex;
-    flex-direction: column;
-    border: 1.5px solid rgba(234, 179, 8, 0.35);
-    border-radius: 12px;
-    overflow: hidden;
-    background: rgba(234, 179, 8, 0.03);
-    box-shadow: 0 0 16px rgba(234, 179, 8, 0.06);
+  .nav-hub::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.35), rgba(234, 179, 8, 0.03) 40%, rgba(234, 179, 8, 0.03) 60%, rgba(234, 179, 8, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
-  .nav-box-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 20px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 8px;
+  .nav-hub-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 4px;
     text-transform: uppercase;
-    text-indent: 8px;
     color: var(--brand-yellow);
-    background: rgba(234, 179, 8, 0.08);
-    border-bottom: 1px solid rgba(234, 179, 8, 0.25);
+    text-shadow: 0 0 16px rgba(234, 179, 8, 0.4);
     white-space: nowrap;
-    text-shadow: 0 0 12px rgba(234, 179, 8, 0.3);
-  }
-  .nav-box-tabs {
-    display: flex;
-    align-items: stretch;
-  }
-  .nav-box-tab {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 24px;
-    font-size: 0.88rem;
-    font-weight: 700;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: all 0.3s;
-    border-right: 1px solid rgba(234, 179, 8, 0.15);
-    flex: 1;
-    text-align: center;
-    cursor: pointer;
+    padding-right: 4px;
     position: relative;
   }
-  .nav-box-tab::after {
-    content: '→';
-    margin-left: 6px;
-    font-size: 0.75rem;
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: all 0.3s;
-  }
-  .nav-box-tab:hover::after {
-    opacity: 0.7;
-    transform: translateX(0);
-  }
-  .nav-box-tab:last-child {
-    border-right: none;
-  }
-  .nav-box-tab.tab-commande {
-    color: var(--brand-yellow);
-  }
-  .nav-box-tab.tab-commande:hover {
-    background: rgba(234, 179, 8, 0.12);
-    box-shadow: inset 0 -2px 0 var(--brand-yellow);
-  }
-  .nav-box-tab.tab-schema {
-    color: var(--brand-blue-light);
-  }
-  .nav-box-tab.tab-schema:hover {
-    background: rgba(37, 99, 235, 0.12);
-    box-shadow: inset 0 -2px 0 var(--brand-blue-light);
-  }
-  .nav-box-tab.tab-verif {
-    color: var(--brand-magenta);
-  }
-  .nav-box-tab.tab-verif:hover {
-    background: rgba(224, 64, 160, 0.12);
-    box-shadow: inset 0 -2px 0 var(--brand-magenta);
-  }
-  .nav-tab {
-    text-decoration: none;
-    font-size: 0.88rem;
-    font-weight: 700;
-    padding: 10px 22px;
-    border-radius: 50px;
-    transition: all 0.3s;
-    white-space: nowrap;
-    border: 1px solid transparent;
-    cursor: pointer;
-  }
-  .nav-tab.tab-commande {
-    color: var(--brand-yellow);
-    background: rgba(234, 179, 8, 0.06);
-    border-color: rgba(234, 179, 8, 0.12);
-  }
-  .nav-tab.tab-commande:hover {
-    background: rgba(234, 179, 8, 0.12);
-    border-color: rgba(234, 179, 8, 0.25);
-  }
-  .nav-tab.tab-schema {
-    color: var(--brand-blue-light);
-    background: rgba(37, 99, 235, 0.06);
-    border-color: rgba(37, 99, 235, 0.12);
-  }
-  .nav-tab.tab-schema:hover {
-    background: rgba(37, 99, 235, 0.12);
-    border-color: rgba(37, 99, 235, 0.25);
-  }
-  .nav-tab.tab-verif {
-    color: var(--brand-magenta);
-    background: rgba(224, 64, 160, 0.06);
-    border-color: rgba(224, 64, 160, 0.12);
-  }
-  .nav-tab.tab-verif:hover {
-    background: rgba(224, 64, 160, 0.12);
-    border-color: rgba(224, 64, 160, 0.25);
-  }
-  .nav-tab.tab-fonctionnement {
-    color: var(--accent-green);
-    background: rgba(16, 185, 129, 0.08);
-    border-color: rgba(16, 185, 129, 0.2);
-    box-shadow: 0 0 12px rgba(16, 185, 129, 0.06);
-  }
-  .nav-tab.tab-fonctionnement:hover {
-    background: rgba(16, 185, 129, 0.15);
-    border-color: rgba(16, 185, 129, 0.35);
-    transform: translateY(-1px);
-  }
-  .nav-tab-sep {
+  .nav-hub-label::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    bottom: -4px;
     width: 1px;
-    height: 16px;
-    background: var(--border-hover);
+    background: linear-gradient(to bottom, transparent, rgba(234, 179, 8, 0.3), transparent);
+  }
+  .nav-hub-items {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-hub-sep {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    flex-shrink: 0;
+  }
+  .nav-hub-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 50px;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+  .nav-hub-item .hub-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.35s;
+    box-shadow: 0 0 0px transparent;
+  }
+  .nav-hub-item.hub-commande { color: var(--brand-yellow); }
+  .nav-hub-item.hub-commande .hub-dot { background: var(--brand-yellow); }
+  .nav-hub-item.hub-commande:hover {
+    background: rgba(234, 179, 8, 0.1);
+  }
+  .nav-hub-item.hub-commande:hover .hub-dot {
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.6);
+  }
+  .nav-hub-item.hub-schema { color: var(--brand-blue-light); }
+  .nav-hub-item.hub-schema .hub-dot { background: var(--brand-blue-light); }
+  .nav-hub-item.hub-schema:hover {
+    background: rgba(37, 99, 235, 0.1);
+  }
+  .nav-hub-item.hub-schema:hover .hub-dot {
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+  }
+  .nav-hub-item.hub-verif { color: var(--brand-magenta); }
+  .nav-hub-item.hub-verif .hub-dot { background: var(--brand-magenta); }
+  .nav-hub-item.hub-verif:hover {
+    background: rgba(224, 64, 160, 0.1);
+  }
+  .nav-hub-item.hub-verif:hover .hub-dot {
+    box-shadow: 0 0 10px rgba(224, 64, 160, 0.6);
   }
 
   .nav-right {
@@ -331,6 +291,26 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+  }
+  .nav-right-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .nav-sub-link {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent-green);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: all 0.3s;
+    opacity: 0.75;
+  }
+  .nav-sub-link:hover {
+    opacity: 1;
+    color: var(--accent-green);
+    text-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
   }
   .nav-cta {
     background: var(--gradient-brand) !important;
@@ -1150,54 +1130,6 @@
   .prestation-feat .dot-yellow { color: var(--brand-yellow); }
   .prestation-feat .dot-green { color: var(--brand-magenta); }
 
-  /* Prestation tabs (Remplissage / Dessin) */
-  .prestation-tabs {
-    display: flex;
-    gap: 0;
-    margin: 20px 0 16px;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 2px solid rgba(37, 99, 235, 0.3);
-    width: fit-content;
-    box-shadow: 0 0 16px rgba(37, 99, 235, 0.08);
-  }
-  .prestation-tab {
-    padding: 12px 32px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    font-family: 'IBM Plex Mono', monospace;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    background: var(--bg-surface);
-    color: var(--text-muted);
-    border: none;
-    transition: all 0.3s;
-    position: relative;
-  }
-  .prestation-tab:not(:last-child) {
-    border-right: 2px solid rgba(37, 99, 235, 0.2);
-  }
-  .prestation-tab:hover {
-    color: var(--text-primary);
-    background: var(--bg-card-hover);
-  }
-  .prestation-tab.active {
-    color: var(--brand-blue-light);
-    background: rgba(37, 99, 235, 0.15);
-    box-shadow: inset 0 -3px 0 var(--brand-blue-light);
-  }
-  .prestation-tab-content {
-    display: none;
-    animation: tabFadeIn 0.3s ease-out;
-  }
-  .prestation-tab-content.active {
-    display: block;
-  }
-  @keyframes tabFadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
   /* Gain de temps badge */
   .gain-badge {
     display: inline-flex;
@@ -1649,6 +1581,135 @@
     }
   }
 
+  /* ============ PRESTATION OPTIONS SPLIT ============ */
+  .prestation-options-wrapper {
+    margin-top: 28px;
+  }
+  .prestation-options-tabs {
+    display: flex;
+    gap: 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 14px 14px 0 0;
+    overflow: hidden;
+    border-bottom: none;
+  }
+  .prestation-option-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 24px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    letter-spacing: 0.2px;
+  }
+  .prestation-option-tab:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 1px;
+    background: var(--border);
+  }
+  .prestation-option-tab .tab-icon {
+    font-size: 1.1rem;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+  .prestation-option-tab .tab-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 50px;
+    background: rgba(234, 179, 8, 0.1);
+    color: var(--brand-yellow);
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+  .prestation-option-tab:hover {
+    color: var(--text-secondary);
+    background: rgba(255,255,255,0.02);
+  }
+  .prestation-option-tab.active {
+    color: var(--text-primary);
+    background: var(--bg-card);
+    box-shadow: inset 0 -3px 0 var(--brand-yellow);
+  }
+  .prestation-option-tab.active .tab-icon {
+    opacity: 1;
+  }
+  .prestation-option-tab.active .tab-badge {
+    opacity: 1;
+    background: rgba(234, 179, 8, 0.15);
+  }
+  .prestation-option-panels {
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+    background: var(--bg-card);
+  }
+  .prestation-option-panel {
+    display: none;
+    padding: 32px;
+    animation: optionFadeIn 0.4s ease-out;
+  }
+  .prestation-option-panel.active {
+    display: block;
+  }
+  @keyframes optionFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .option-description {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    max-width: 700px;
+  }
+  .option-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .option-feat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 7px 14px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .option-feat:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+  }
+  @media (max-width: 768px) {
+    .prestation-options-tabs { flex-direction: column; border-radius: 14px 14px 0 0; }
+    .prestation-option-tab:not(:last-child)::after { display: none; }
+    .prestation-option-tab { padding: 14px 20px; }
+    .prestation-option-panel { padding: 24px 20px; }
+  }
+
   /* ============ FORM ============ */
   .form-section {
     padding: 120px 40px;
@@ -1847,7 +1908,6 @@
     .prestation-tag { margin: 0 auto 16px; }
     .prestation-features { align-items: center; }
     .prestation-feat { justify-content: center; text-align: center; }
-    .prestation-tabs { margin: 16px auto 4px; }
     .gain-badge { justify-content: center; text-align: center; font-size: 0.82rem; }
     .gain-highlight { text-align: center; justify-content: center; font-size: 0.92rem; }
     .dev-badge { margin: 0 auto 16px; }
@@ -1859,9 +1919,8 @@
     .software-intro-icon { text-align: center; }
   }
   @media (max-width: 1024px) and (min-width: 769px) {
-    .nav-box-tab { font-size: 0.72rem; padding: 6px 12px; }
-    .nav-box-label { font-size: 0.65rem; padding: 6px 14px; }
-    .nav-tab.tab-fonctionnement { font-size: 0.72rem; padding: 5px 12px; }
+    .nav-hub-label { font-size: 0.58rem; letter-spacing: 3px; }
+    .nav-hub-item { font-size: 0.7rem; padding: 6px 10px; }
   }
 </style>
 </head>
@@ -1878,20 +1937,31 @@
     <img src="logo-reselec.png" alt="RES ELEC" style="height:42px;width:auto;" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo-placeholder\'>RES <span class=\'elec\'>ELEC</span></div>';">
   </a>
   <div class="nav-center">
-    <div class="nav-box-wrapper">
-      <div class="nav-box">
-        <div class="nav-box-label">Automatisation</div>
-        <div class="nav-box-tabs">
-          <a href="#commande" class="nav-box-tab tab-commande">Partie commande</a>
-          <a href="#schema" class="nav-box-tab tab-schema">Schéma complet via NDC</a>
-          <a href="#verifications" class="nav-box-tab tab-verif">Partie vérification</a>
-        </div>
+    <div class="nav-hub">
+      <span class="nav-hub-label">Automatisation</span>
+      <div class="nav-hub-items">
+        <a href="#commande" class="nav-hub-item hub-commande">
+          <span class="hub-dot"></span>
+          Partie commande
+        </a>
+        <span class="nav-hub-sep"></span>
+        <a href="#schema" class="nav-hub-item hub-schema">
+          <span class="hub-dot"></span>
+          Schéma automatisé via NDC
+        </a>
+        <span class="nav-hub-sep"></span>
+        <a href="#verifications" class="nav-hub-item hub-verif">
+          <span class="hub-dot"></span>
+          Partie vérification
+        </a>
       </div>
-      <a href="#fonctionnement" class="nav-tab tab-fonctionnement">Notre fonctionnement</a>
     </div>
   </div>
   <div class="nav-right">
-    <a href="#devis" class="nav-cta">Demander un devis</a>
+    <div class="nav-right-stack">
+      <a href="#devis" class="nav-cta">Demander un devis</a>
+      <a href="#fonctionnement" class="nav-sub-link">Notre fonctionnement →</a>
+    </div>
   </div>
 </nav>
 
@@ -2035,104 +2105,186 @@
     </div>
   </div>
 
-  <!-- 2 — Synthèse défauts (onglets Remplissage / Dessin) -->
+  <!-- 2 — Synthèse défauts (2 options) -->
   <div class="prestation-block reveal">
     <div class="prestation-header">
       <h3>Schéma de synthèse défauts</h3>
-      <div class="prestation-tabs" data-group="sd">
-        <button class="prestation-tab active" data-target="sd-remplissage">Remplissage</button>
-        <button class="prestation-tab" data-target="sd-dessin">Dessin</button>
+      <p>Deux modes de génération disponibles selon votre besoin : un schéma point par point avec le détail de chaque départ, ou un schéma de synthèse complet avec vue d'ensemble. Choisissez l'option qui correspond le mieux à votre façon de travailler.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-blue">●</span> Génération du schéma de commande SD</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Adapté au nombre de départs</span>
+        <span class="prestation-feat"><span class="dot-blue">●</span> Fini le copier-coller fastidieux</span>
       </div>
-      <div class="prestation-tab-content active" id="sd-remplissage">
-        <div class="prestation-features">
-          <span class="prestation-feat"><span class="dot-blue">●</span> Remplissage automatique des infos SD</span>
-          <span class="prestation-feat"><span class="dot-blue">●</span> Adapté au nombre de départs</span>
-          <span class="prestation-feat"><span class="dot-blue">●</span> Fini le copier-coller fastidieux</span>
-        </div>
-        <div class="gain-badge">
-          <span class="clock-icon">⏱️</span>
-          Gain significatif sur les armoires à nombreux départs
-        </div>
-      </div>
-      <div class="prestation-tab-content" id="sd-dessin">
-        <div class="prestation-features">
-          <span class="prestation-feat"><span class="dot-blue">●</span> Génération du schéma de commande SD</span>
-          <span class="prestation-feat"><span class="dot-blue">●</span> Dessin complet automatisé</span>
-          <span class="prestation-feat"><span class="dot-blue">●</span> Indépendant du nombre de départs</span>
-        </div>
-        <div class="gain-badge">
-          <span class="clock-icon">⏱️</span>
-          Gain significatif sur les armoires à nombreux départs
-        </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain significatif sur les armoires à nombreux départs
       </div>
     </div>
-    <div class="prestation-preview blue-glow">
-      <div class="preview-toolbar">
-        <span class="toolbar-dot"></span>
-        <span class="toolbar-dot"></span>
-        <span class="toolbar-dot"></span>
-        <span class="toolbar-title">auto_synthese_defauts.dwg — AutoCAD 2026</span>
+
+    <!-- Options tabs -->
+    <div class="prestation-options-wrapper">
+      <div class="prestation-options-tabs">
+        <button class="prestation-option-tab active" data-option="sd-ppp" onclick="switchOption(this, 'sd-ppp')">
+          <span class="tab-icon">📋</span>
+          Synthèse défauts — Point par point
+          <span class="tab-badge">Option A</span>
+        </button>
+        <button class="prestation-option-tab" data-option="sd-complet" onclick="switchOption(this, 'sd-complet')">
+          <span class="tab-icon">📊</span>
+          Synthèse défauts — Général
+          <span class="tab-badge">Option B</span>
+        </button>
       </div>
-      <div class="preview-content">
-        <div class="preview-grid"></div>
-        <div class="preview-play blue">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      <div class="prestation-option-panels">
+
+        <!-- Option A: Point par point -->
+        <div class="prestation-option-panel active" id="panel-sd-ppp">
+          <p class="option-description">Avec l'option <strong>point par point</strong>, un schéma de bornier contact par contact sera dessiné pour chaque départ. Chaque contact SD est positionné individuellement avec ses repères, ce qui facilite la relecture et la mise en service pour les tableautiers et exploitants.</p>
+          <div class="option-features">
+            <span class="option-feat"><span class="dot-yellow">●</span> Un folio par départ</span>
+            <span class="option-feat"><span class="dot-yellow">●</span> Contacts SD détaillés</span>
+            <span class="option-feat"><span class="dot-yellow">●</span> Idéal pour la mise en service</span>
+          </div>
+          <div class="prestation-preview yellow-glow">
+            <div class="preview-toolbar">
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-title">auto_synthese_defauts_ppp.dwg — AutoCAD 2026</span>
+            </div>
+            <div class="preview-content">
+              <div class="preview-grid"></div>
+              <div class="preview-play yellow">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+              <div class="preview-hint">
+                <div class="scroll-icon"><span></span></div>
+                Voir la démo — Synthèse défauts point par point
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="preview-hint">
-          <div class="scroll-icon"><span></span></div>
-          Voir la démo — Synthèse défauts automatique
+
+        <!-- Option B: Général -->
+        <div class="prestation-option-panel" id="panel-sd-complet">
+          <p class="option-description">Avec l'option <strong>vue d'ensemble</strong>, seul un schéma de synthèse général sera dessiné, regroupant tous les départs sur un minimum de folios. Une vue globale et synthétique de l'ensemble des défauts, idéale pour les dossiers de synthèse et la lecture rapide.</p>
+          <div class="option-features">
+            <span class="option-feat"><span class="dot-blue">●</span> Vue globale sur un minimum de folios</span>
+            <span class="option-feat"><span class="dot-blue">●</span> Lecture rapide & synthétique</span>
+            <span class="option-feat"><span class="dot-blue">●</span> Idéal pour les dossiers complets</span>
+          </div>
+          <div class="prestation-preview blue-glow">
+            <div class="preview-toolbar">
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-title">auto_synthese_defauts_global.dwg — AutoCAD 2026</span>
+            </div>
+            <div class="preview-content">
+              <div class="preview-grid"></div>
+              <div class="preview-play blue">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+              <div class="preview-hint">
+                <div class="scroll-icon"><span></span></div>
+                Voir la démo — Synthèse défauts général
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- 3 — Contact OF (onglets Remplissage / Dessin) -->
+  <!-- 2b — Contact OF (2 options) -->
   <div class="prestation-block reveal">
     <div class="prestation-header">
       <h3>Schéma de contact OF</h3>
-      <div class="prestation-tabs" data-group="of">
-        <button class="prestation-tab active" data-target="of-remplissage">Remplissage</button>
-        <button class="prestation-tab" data-target="of-dessin">Dessin</button>
+      <p>Deux modes de génération disponibles selon votre besoin : un schéma contact par contact avec le détail de chaque départ, ou un schéma de synthèse général regroupant tous les contacts OF.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-yellow">●</span> Génération du schéma de commande OF</span>
+        <span class="prestation-feat"><span class="dot-yellow">●</span> Adapté au nombre de départs</span>
+        <span class="prestation-feat"><span class="dot-yellow">●</span> Fini le copier-coller fastidieux</span>
       </div>
-      <div class="prestation-tab-content active" id="of-remplissage">
-        <div class="prestation-features">
-          <span class="prestation-feat"><span class="dot-yellow">●</span> Remplissage automatique des infos OF</span>
-          <span class="prestation-feat"><span class="dot-yellow">●</span> Adapté au nombre de départs</span>
-          <span class="prestation-feat"><span class="dot-yellow">●</span> Fini le copier-coller fastidieux</span>
-        </div>
-        <div class="gain-badge">
-          <span class="clock-icon">⏱️</span>
-          Gain significatif sur les armoires à nombreux départs
-        </div>
-      </div>
-      <div class="prestation-tab-content" id="of-dessin">
-        <div class="prestation-features">
-          <span class="prestation-feat"><span class="dot-yellow">●</span> Génération du schéma de commande OF</span>
-          <span class="prestation-feat"><span class="dot-yellow">●</span> Dessin complet automatisé</span>
-          <span class="prestation-feat"><span class="dot-yellow">●</span> Indépendant du nombre de départs</span>
-        </div>
-        <div class="gain-badge">
-          <span class="clock-icon">⏱️</span>
-          Gain significatif sur les armoires à nombreux départs
-        </div>
+      <div class="gain-badge">
+        <span class="clock-icon">⏱️</span>
+        Gain significatif sur les armoires à nombreux départs
       </div>
     </div>
-    <div class="prestation-preview yellow-glow">
-      <div class="preview-toolbar">
-        <span class="toolbar-dot"></span>
-        <span class="toolbar-dot"></span>
-        <span class="toolbar-dot"></span>
-        <span class="toolbar-title">auto_contact_of.dwg — AutoCAD 2026</span>
+
+    <!-- Options tabs -->
+    <div class="prestation-options-wrapper">
+      <div class="prestation-options-tabs">
+        <button class="prestation-option-tab active" data-option="of-ppp" onclick="switchOption(this, 'of-ppp')">
+          <span class="tab-icon">📋</span>
+          Contact OF — Point par point
+          <span class="tab-badge">Option A</span>
+        </button>
+        <button class="prestation-option-tab" data-option="of-general" onclick="switchOption(this, 'of-general')">
+          <span class="tab-icon">📊</span>
+          Contact OF — Général
+          <span class="tab-badge">Option B</span>
+        </button>
       </div>
-      <div class="preview-content">
-        <div class="preview-grid"></div>
-        <div class="preview-play yellow">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      <div class="prestation-option-panels">
+
+        <!-- Option A: Point par point -->
+        <div class="prestation-option-panel active" id="panel-of-ppp">
+          <p class="option-description">Avec l'option <strong>point par point</strong>, un schéma de contact OF contact par contact sera dessiné pour chaque départ. Chaque contact OF est positionné individuellement avec ses repères, ce qui facilite la relecture et la mise en service.</p>
+          <div class="option-features">
+            <span class="option-feat"><span class="dot-yellow">●</span> Un folio par départ</span>
+            <span class="option-feat"><span class="dot-yellow">●</span> Contacts OF détaillés</span>
+            <span class="option-feat"><span class="dot-yellow">●</span> Idéal pour la mise en service</span>
+          </div>
+          <div class="prestation-preview yellow-glow">
+            <div class="preview-toolbar">
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-title">auto_contact_of_ppp.dwg — AutoCAD 2026</span>
+            </div>
+            <div class="preview-content">
+              <div class="preview-grid"></div>
+              <div class="preview-play yellow">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+              <div class="preview-hint">
+                <div class="scroll-icon"><span></span></div>
+                Voir la démo — Contact OF point par point
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="preview-hint">
-          <div class="scroll-icon"><span></span></div>
-          Voir la démo — Contact OF automatique
+
+        <!-- Option B: Général -->
+        <div class="prestation-option-panel" id="panel-of-general">
+          <p class="option-description">Avec l'option <strong>général</strong>, seul un schéma de synthèse général sera dessiné, regroupant tous les contacts OF sur un minimum de folios. Une vue globale et synthétique, idéale pour les dossiers complets.</p>
+          <div class="option-features">
+            <span class="option-feat"><span class="dot-blue">●</span> Vue globale sur un minimum de folios</span>
+            <span class="option-feat"><span class="dot-blue">●</span> Lecture rapide & synthétique</span>
+            <span class="option-feat"><span class="dot-blue">●</span> Idéal pour les dossiers complets</span>
+          </div>
+          <div class="prestation-preview blue-glow">
+            <div class="preview-toolbar">
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-dot"></span>
+              <span class="toolbar-title">auto_contact_of_general.dwg — AutoCAD 2026</span>
+            </div>
+            <div class="preview-content">
+              <div class="preview-grid"></div>
+              <div class="preview-play blue">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+              <div class="preview-hint">
+                <div class="scroll-icon"><span></span></div>
+                Voir la démo — Contact OF général
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -2194,12 +2346,12 @@
   <!-- Section Divider: Partie 2 -->
   <div class="section-divider blue">
     <div class="divider-number">Partie 2</div>
-    <div class="divider-title">Schéma complet via NDC</div>
+    <div class="divider-title">Schéma automatisé via NDC</div>
     <div class="divider-sub">Remplissage auto · Dessin auto · Données CANECO</div>
   </div>
 
   <div class="category-intro blue-intro reveal">
-    <h3>📐 Schéma complet via Note de Calcul</h3>
+    <h3>📐 Schéma automatisé via Note de Calcul</h3>
     <p>C'est l'automatisation la plus puissante de notre gamme. À partir d'une simple note de calcul (CANECO), il est possible de générer <strong>automatiquement l'intégralité du schéma de puissance</strong> — remplissage des infos des départs + de la partie dessin de chacun des départs — hors schéma de commande technique. Un gain de temps considérable, et surtout une cohérence totale entre la NDC et le schéma : chaque départ est strictement conforme aux données de la note de calcul, sans risque d'erreur de saisie.</p>
     <div class="gain-highlight blue-highlight">⏱️ Gain potentiel : jusqu'à 6h par schéma de 100 départs / 20 folios</div>
   </div>
@@ -2598,7 +2750,8 @@
           <select name="type">
             <option value="">Sélectionnez...</option>
             <option>Schéma de bornier automatique</option>
-            <option>Synthèse défauts automatique</option>
+            <option>Synthèse défauts — Point par point</option>
+            <option>Synthèse défauts — Général</option>
             <option>Étiquettes de bornier</option>
             <option>Remplissage auto depuis note de calcul</option>
             <option>Dessin auto depuis note de calcul</option>
@@ -2750,6 +2903,16 @@
     }
   });
 
+  // Prestation options tab switch
+  function switchOption(btn, panelId) {
+    const wrapper = btn.closest('.prestation-options-wrapper');
+    wrapper.querySelectorAll('.prestation-option-tab').forEach(t => t.classList.remove('active'));
+    wrapper.querySelectorAll('.prestation-option-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const panel = document.getElementById('panel-' + panelId);
+    if (panel) panel.classList.add('active');
+  }
+
   // Video hover play
   document.querySelectorAll('.prestation-preview').forEach(container => {
     const video = container.querySelector('video');
@@ -2795,24 +2958,9 @@
     floatingContact.classList.remove('open');
   });
 
-  // Prestation tabs (Remplissage / Dessin)
-  document.querySelectorAll('.prestation-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      const group = tab.closest('.prestation-tabs').dataset.group;
-      const targetId = tab.dataset.target;
-      // Deactivate all tabs in this group
-      tab.closest('.prestation-tabs').querySelectorAll('.prestation-tab').forEach(t => t.classList.remove('active'));
-      // Deactivate all contents in this group
-      tab.closest('.prestation-header').querySelectorAll('.prestation-tab-content').forEach(c => c.classList.remove('active'));
-      // Activate clicked tab and its content
-      tab.classList.add('active');
-      document.getElementById(targetId).classList.add('active');
-    });
-  });
-
   // Active nav tab highlight on scroll
   const sections = ['commande', 'schema', 'verifications', 'fonctionnement'];
-  const navTabs = document.querySelectorAll('.nav-tab, .nav-box-tab');
+  const navTabs = document.querySelectorAll('.nav-hub-item');
 
   window.addEventListener('scroll', () => {
     let current = '';
