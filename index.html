@@ -164,12 +164,28 @@
     gap: 14px;
     text-decoration: none;
     color: var(--text-primary);
+    position: relative;
+    z-index: 10;
+  }
+  .nav-logo img {
+    border: 2px solid #d4a017;
+    border-radius: 12px;
+    padding: 4px;
+    box-shadow: 0 0 12px rgba(212, 160, 23, 0.45), 0 0 24px rgba(212, 160, 23, 0.2);
+    background: rgba(212, 160, 23, 0.06);
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+  .nav-logo img:hover {
+    box-shadow: 0 0 18px rgba(212, 160, 23, 0.65), 0 0 36px rgba(212, 160, 23, 0.3);
+    border-color: #e6b422;
   }
   .logo-placeholder {
-    height: 42px;
+    height: 84px;
     padding: 0 16px;
     background: linear-gradient(135deg, var(--brand-blue), var(--brand-yellow));
-    border-radius: 10px;
+    border-radius: 12px;
+    border: 2px solid #d4a017;
+    box-shadow: 0 0 12px rgba(212, 160, 23, 0.45);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1934,7 +1950,7 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
-    <img src="AutomateFactory.png" alt="AutomateFactory" style="height:42px;width:auto;" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo-placeholder\'>Automate<span class=\'elec\'>Factory</span></div>';">
+    <img src="AutomateFactory.png" alt="AutomateFactory" style="height:84px;width:auto;" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo-placeholder\'>Automate<span class=\'elec\'>Factory</span></div>';">
   </a>
   <div class="nav-center">
     <div class="nav-hub">
