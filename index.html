@@ -228,6 +228,29 @@
     color: var(--brand-yellow-light);
   }
 
+  /* ============ NAV GROUP AUTOMATISATIONS ============ */
+  .nav-group-auto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 18px;
+    position: relative;
+  }
+  .nav-group-label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--brand-yellow);
+    margin-bottom: 4px;
+    white-space: nowrap;
+  }
+  .nav-group-btns {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
   /* ============ DROPDOWN MENUS ============ */
   .nav-dropdown {
     position: relative;
@@ -267,20 +290,10 @@
   }
   .nav-dropdown > .nav-btn { color: var(--brand-yellow); border-color: var(--brand-blue); }
   .nav-dropdown > .nav-btn:hover { background: rgba(37, 99, 235, 0.12); color: var(--brand-yellow-light); }
-  .nav-dropdown.dropdown-yellow .nav-dropdown-menu a { color: var(--brand-yellow) !important; }
-  .nav-dropdown.dropdown-yellow .nav-dropdown-menu a:hover {
+  .nav-dropdown-menu a { color: var(--brand-yellow) !important; }
+  .nav-dropdown-menu a:hover {
     background: rgba(234, 179, 8, 0.08) !important;
     color: var(--brand-yellow-light) !important;
-  }
-  .nav-dropdown.dropdown-blue .nav-dropdown-menu a { color: var(--brand-blue-light) !important; }
-  .nav-dropdown.dropdown-blue .nav-dropdown-menu a:hover {
-    background: rgba(37, 99, 235, 0.08) !important;
-    color: #60a5fa !important;
-  }
-  .nav-dropdown.dropdown-magenta .nav-dropdown-menu a { color: var(--brand-magenta) !important; }
-  .nav-dropdown.dropdown-magenta .nav-dropdown-menu a:hover {
-    background: rgba(224, 64, 160, 0.08) !important;
-    color: var(--brand-magenta-light) !important;
   }
   .nav-dropdown-menu .dropdown-section-title {
     font-size: 0.68rem !important;
@@ -2121,34 +2134,39 @@
     <img src="AutomateFactory.png" alt="AutomateFactory" style="height:126px;width:auto;" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo-placeholder\'>Automate<span class=\'elec\'>Factory</span></div>';">
   </a>
   <div class="nav-links">
-    <div class="nav-dropdown dropdown-yellow">
-      <a href="#" class="nav-btn nav-gold" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Partie commande</a>
-      <div class="nav-dropdown-menu">
-        <a href="#presta-bornier">Schéma de bornier automatique</a>
-        <a href="#presta-synthese">Schéma de synthèse défauts</a>
-        <a href="#presta-of">Schéma de contact OF</a>
-        <a href="#presta-etiquettes">Attribution d'étiquettes de bornier</a>
-        <a href="#presta-commande-custom">Commande personnalisée</a>
-      </div>
-    </div>
-    <div class="nav-dropdown dropdown-blue">
-      <a href="#" class="nav-btn nav-gold" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Schéma via NDC</a>
-      <div class="nav-dropdown-menu">
-        <a href="#presta-dessin">Dessin automatisé depuis NDC</a>
-      </div>
-    </div>
-    <div class="nav-dropdown dropdown-magenta">
-      <a href="#" class="nav-btn nav-gold" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Vérifications</a>
-      <div class="nav-dropdown-menu">
-        <a href="#presta-symboles">Vérification symboles disjoncteurs</a>
-        <a href="#presta-incoherences">Vérification incohérences techniques</a>
-        <a href="#presta-sommaire">Sommaire automatique de folio</a>
-        <a href="#presta-report">Report de folio automatique</a>
-        <a href="#presta-tbs">Contrôle barres de terre & TBS</a>
+    <div class="nav-group-auto">
+      <span class="nav-group-label">Automatisations</span>
+      <div class="nav-group-btns">
+        <div class="nav-dropdown dropdown-yellow">
+          <a href="#" class="nav-btn" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Partie commande</a>
+          <div class="nav-dropdown-menu">
+            <a href="#presta-bornier">Schéma de bornier automatique</a>
+            <a href="#presta-synthese">Schéma de synthèse défauts</a>
+            <a href="#presta-of">Schéma de contact OF</a>
+            <a href="#presta-etiquettes">Attribution d'étiquettes de bornier</a>
+            <a href="#presta-commande-custom">Commande personnalisée</a>
+          </div>
+        </div>
+        <div class="nav-dropdown dropdown-blue">
+          <a href="#" class="nav-btn" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Schéma via NDC</a>
+          <div class="nav-dropdown-menu">
+            <a href="#presta-dessin">Dessin automatisé depuis NDC</a>
+          </div>
+        </div>
+        <div class="nav-dropdown dropdown-magenta">
+          <a href="#" class="nav-btn" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Vérifications</a>
+          <div class="nav-dropdown-menu">
+            <a href="#presta-symboles">Vérification symboles disjoncteurs</a>
+            <a href="#presta-incoherences">Vérification incohérences techniques</a>
+            <a href="#presta-sommaire">Sommaire automatique de folio</a>
+            <a href="#presta-report">Report de folio automatique</a>
+            <a href="#presta-tbs">Contrôle barres de terre & TBS</a>
+          </div>
+        </div>
       </div>
     </div>
     <a href="#presta-sur-mesure" class="nav-btn">Développement sur mesure</a>
-    <a href="#fonctionnement" class="nav-btn nav-gold">Notre fonctionnement</a>
+    <a href="#fonctionnement" class="nav-btn">Notre fonctionnement</a>
     <a href="#devis" class="nav-btn nav-cta-btn">Demander un devis</a>
   </div>
 </nav>
@@ -2801,7 +2819,8 @@
   <div class="category-intro reveal" style="border-color: rgba(16, 185, 129, 0.15); background: linear-gradient(135deg, rgba(16, 19, 28, 0.95), rgba(16, 185, 129, 0.05));">
     <h3 style="color: var(--accent-green);">🛠️ Un développement pensé pour vos besoins</h3>
     <p>Au-delà de nos automatisations standard, nous pouvons <strong>développer en interne du code spécifiquement adapté à vos trames de schéma</strong>. Que ce soit un module pour un <strong>schéma de bornier XP</strong>, un <strong>schéma de comptage compteur</strong>, des <strong>vérifications spécifiques à votre activité</strong>, ou toute autre automatisation sur mesure — nous concevons et livrons des solutions qui correspondent exactement à votre façon de travailler.</p>
-    <p style="margin-top: 12px; color: var(--text-secondary);">Chaque projet est unique. Nous analysons vos trames DWG, identifions les tâches automatisables, et développons des modules qui s'intègrent parfaitement à votre environnement AutoCAD. Le résultat : un logiciel taillé sur mesure, prêt à l'emploi, qui vous fait gagner un temps considérable au quotidien.</p>
+    <p style="margin-top: 12px; color: var(--text-secondary);">Chaque projet est unique, et chaque client a ses propres besoins. Nous pouvons <strong style="color: var(--text-primary);">automatiser tout type de demande</strong> — partie commande, vérifications, génération de schémas ou toute autre tâche répétitive — sous réserve de faisabilité technique. Même si une automatisation n'est pas présentée sur notre site, il y a de fortes chances que nous puissions la développer pour vous.</p>
+    <p style="margin-top: 12px; color: var(--text-secondary);">Nous analysons vos trames DWG, identifions les tâches automatisables, et développons des modules qui s'intègrent parfaitement à votre environnement AutoCAD. Le résultat : un logiciel taillé sur mesure, prêt à l'emploi, qui vous fait gagner un temps considérable au quotidien.</p>
     <div class="gain-highlight" style="background: rgba(16, 185, 129, 0.06); border-color: rgba(16, 185, 129, 0.15); color: var(--accent-green);">🚀 Contactez-nous pour discuter de votre projet sur mesure</div>
   </div>
 
@@ -2829,12 +2848,12 @@
     <div class="section-label yellow">Comment ça marche ?</div>
     <div class="brand-divider"></div>
     <h2 class="section-title">Notre fonctionnement, étape par étape</h2>
-    <p class="section-subtitle">De la prise de contact à la livraison de votre logiciel, un processus clair et transparent pour des automatisations qui vous correspondent.</p>
+    <p class="section-subtitle">Deux formules pour répondre à vos besoins : adoptez notre trame clé en main, ou faites développer du code adapté à votre propre trame.</p>
   </div>
 
+  <!-- ===== ÉTAPE COMMUNE : RDV ===== -->
   <div class="process-timeline">
 
-    <!-- Étape 1 -->
     <div class="process-step reveal">
       <div class="step-indicator step-blue">
         <span class="step-num">01</span>
@@ -2842,7 +2861,7 @@
       </div>
       <div class="step-content border-blue">
         <h3>Premier rendez-vous <span class="step-free">Gratuit</span></h3>
-        <p>Un échange en visioconférence avec partage d'écran pour comprendre vos besoins, votre façon de travailler et vos attentes en matière d'automatisation.</p>
+        <p>Un échange en visioconférence avec partage d'écran pour comprendre vos besoins, votre façon de travailler, et déterminer quelle formule vous correspond le mieux.</p>
         <div class="step-tags">
           <span class="step-tag"><span class="tag-icon">🎥</span> Visioconférence</span>
           <span class="step-tag"><span class="tag-icon">🖥️</span> Partage d'écran</span>
@@ -2851,69 +2870,87 @@
       </div>
     </div>
 
-    <!-- Étape 2 -->
-    <div class="process-step reveal">
-      <div class="step-indicator step-yellow">
-        <span class="step-num">02</span>
-        <span class="step-icon">🔍</span>
-      </div>
-      <div class="step-content border-yellow">
-        <h3>Analyse de votre trame de schéma</h3>
-        <p>Nous étudions en détail votre trame DWG : blocs dynamiques, structure des folios, blocothèque de symboles. On comprend comment votre trame fonctionne pour construire des automatisations parfaitement compatibles.</p>
-        <div class="step-tags">
-          <span class="step-tag"><span class="tag-icon">📐</span> Blocs & structure</span>
-          <span class="step-tag"><span class="tag-icon">📁</span> Blocothèque</span>
-          <span class="step-tag"><span class="tag-icon">⚙️</span> Propriétés dynamiques</span>
+  </div>
+
+  <!-- ===== DEUX PARCOURS ===== -->
+  <div class="section-header reveal" style="margin-top: 60px; margin-bottom: 0;">
+    <h2 class="section-title" style="font-size: clamp(1.4rem, 3vw, 2rem);">Ensuite, deux parcours possibles</h2>
+  </div>
+
+  <div style="display: flex; gap: 32px; margin-top: 40px; flex-wrap: wrap; justify-content: center; max-width: 1100px; margin-left: auto; margin-right: auto; padding: 0 20px;">
+
+    <!-- PARCOURS A — TRAME AUTOMATE FACTORY -->
+    <div class="reveal" style="flex: 1; min-width: 320px; background: linear-gradient(135deg, rgba(16, 19, 28, 0.95), rgba(234, 179, 8, 0.04)); border: 1px solid rgba(234, 179, 8, 0.15); border-radius: 20px; padding: 40px 32px; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--brand-yellow), var(--brand-yellow-light));"></div>
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(234, 179, 8, 0.08); border: 1px solid rgba(234, 179, 8, 0.2); border-radius: 50px; padding: 6px 16px; font-size: 0.72rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--brand-yellow); margin-bottom: 20px;">Formule A</div>
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 14px; color: var(--brand-yellow);">📐 Notre trame de schéma</h3>
+      <p style="color: var(--text-secondary); line-height: 1.75; font-size: 0.95rem; margin-bottom: 20px;">Vous adoptez <strong style="color: var(--text-primary);">notre trame de schéma normée</strong>, déjà équipée de toutes les automatisations présentées sur ce site. Aucun développement supplémentaire nécessaire.</p>
+
+      <div class="process-timeline" style="margin-top: 0;">
+        <div class="process-step" style="opacity:1; transform:none;">
+          <div class="step-indicator step-yellow"><span class="step-num">02</span><span class="step-icon">📋</span></div>
+          <div class="step-content border-yellow">
+            <h3>Présentation de la trame & des modules</h3>
+            <p>On vous montre en détail notre trame de schéma et l'ensemble des automatisations incluses. Vous voyez concrètement ce que vous obtiendrez.</p>
+          </div>
+        </div>
+        <div class="process-step" style="opacity:1; transform:none;">
+          <div class="step-indicator step-yellow"><span class="step-num">03</span><span class="step-icon">🔑</span></div>
+          <div class="step-content border-yellow">
+            <h3>Souscription & accès immédiat</h3>
+            <p>Vous souscrivez à l'abonnement mensuel et recevez immédiatement votre logiciel avec toutes les automatisations, prêt à l'emploi.</p>
+            <div class="step-tags">
+              <span class="step-tag"><span class="tag-icon">💰</span> Abonnement mensuel</span>
+              <span class="step-tag"><span class="tag-icon">⚡</span> Accès immédiat</span>
+              <span class="step-tag"><span class="tag-icon">📦</span> Tout inclus</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Étape 3 -->
-    <div class="process-step reveal">
-      <div class="step-indicator step-magenta">
-        <span class="step-num">03</span>
-        <span class="step-icon">💡</span>
-      </div>
-      <div class="step-content border-magenta">
-        <h3>Conseils & optimisation de vos processus</h3>
-        <p>Avant même de coder, on vous conseille sur les optimisations possibles de vos processus de création de schéma. L'objectif : maximiser le gain de temps et la fiabilité de vos livrables.</p>
-        <div class="step-tags">
-          <span class="step-tag"><span class="tag-icon">🚀</span> Optimisation workflow</span>
-          <span class="step-tag"><span class="tag-icon">📋</span> Recommandations</span>
-        </div>
-      </div>
-    </div>
+    <!-- PARCOURS B — DÉVELOPPEMENT SUR MESURE -->
+    <div class="reveal" style="flex: 1; min-width: 320px; background: linear-gradient(135deg, rgba(16, 19, 28, 0.95), rgba(37, 99, 235, 0.04)); border: 1px solid rgba(37, 99, 235, 0.15); border-radius: 20px; padding: 40px 32px; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--brand-blue), var(--brand-blue-light));"></div>
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 50px; padding: 6px 16px; font-size: 0.72rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--brand-blue-light); margin-bottom: 20px;">Formule B</div>
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 14px; color: var(--brand-blue-light);">🛠️ Développement sur mesure</h3>
+      <p style="color: var(--text-secondary); line-height: 1.75; font-size: 0.95rem; margin-bottom: 20px;">Vous gardez <strong style="color: var(--text-primary);">votre propre trame de schéma et vos blocs</strong>. Nous développons du code spécifiquement adapté à votre environnement de travail.</p>
 
-    <!-- Étape 4 -->
-    <div class="process-step reveal">
-      <div class="step-indicator step-blue">
-        <span class="step-num">04</span>
-        <span class="step-icon">📄</span>
-      </div>
-      <div class="step-content border-blue">
-        <h3>Proposition d'automatisation sur mesure</h3>
-        <p>On vous présente une proposition détaillée des automatisations adaptées à vos trames et à vos besoins, avec les gains de temps estimés pour chaque commande.</p>
-        <div class="step-tags">
-          <span class="step-tag"><span class="tag-icon">📊</span> Devis détaillé</span>
-          <span class="step-tag"><span class="tag-icon">⏱️</span> Gains estimés</span>
-          <span class="step-tag"><span class="tag-icon">🎯</span> 100% sur mesure</span>
+      <div class="process-timeline" style="margin-top: 0;">
+        <div class="process-step" style="opacity:1; transform:none;">
+          <div class="step-indicator step-blue"><span class="step-num">02</span><span class="step-icon">🔍</span></div>
+          <div class="step-content border-blue">
+            <h3>Analyse de votre trame DWG</h3>
+            <p>Nous étudions en détail votre trame : blocs dynamiques, structure des folios, blocothèque de symboles. On comprend comment elle fonctionne pour bâtir des automatisations compatibles.</p>
+            <div class="step-tags">
+              <span class="step-tag"><span class="tag-icon">📐</span> Blocs & structure</span>
+              <span class="step-tag"><span class="tag-icon">📁</span> Blocothèque</span>
+              <span class="step-tag"><span class="tag-icon">⚙️</span> Propriétés dynamiques</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Étape 5 -->
-    <div class="process-step reveal">
-      <div class="step-indicator step-green">
-        <span class="step-num">05</span>
-        <span class="step-icon">✅</span>
-      </div>
-      <div class="step-content border-green">
-        <h3>Livraison de votre logiciel</h3>
-        <p>Votre logiciel d'automatisation est livré clé en main, avec chacune de vos commandes intégrées. Chaque automatisation est testée et fiabilisée sur plusieurs schémas types en reprenant votre propre trame.</p>
-        <div class="step-tags">
-          <span class="step-tag"><span class="tag-icon">🖥️</span> Logiciel clé en main</span>
-          <span class="step-tag"><span class="tag-icon">🧪</span> Testé & fiabilisé</span>
-          <span class="step-tag"><span class="tag-icon">📦</span> Prêt à l'emploi</span>
+        <div class="process-step" style="opacity:1; transform:none;">
+          <div class="step-indicator step-blue"><span class="step-num">03</span><span class="step-icon">💡</span></div>
+          <div class="step-content border-blue">
+            <h3>Conseils & proposition sur mesure</h3>
+            <p>On vous conseille sur les optimisations possibles et on vous présente une proposition détaillée avec les gains de temps estimés pour chaque module.</p>
+            <div class="step-tags">
+              <span class="step-tag"><span class="tag-icon">📊</span> Devis détaillé</span>
+              <span class="step-tag"><span class="tag-icon">⏱️</span> Gains estimés</span>
+            </div>
+          </div>
+        </div>
+        <div class="process-step" style="opacity:1; transform:none;">
+          <div class="step-indicator step-green"><span class="step-num">04</span><span class="step-icon">✅</span></div>
+          <div class="step-content border-green">
+            <h3>Développement & livraison</h3>
+            <p>Nous développons vos modules sur mesure, les testons sur vos propres schémas types, et vous livrons un logiciel clé en main parfaitement adapté à votre trame.</p>
+            <div class="step-tags">
+              <span class="step-tag"><span class="tag-icon">🖥️</span> Logiciel clé en main</span>
+              <span class="step-tag"><span class="tag-icon">🧪</span> Testé & fiabilisé</span>
+              <span class="step-tag"><span class="tag-icon">🎯</span> 100% sur mesure</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
