@@ -205,13 +205,13 @@
   }
   .nav-btn {
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.78rem;
     font-weight: 600;
-    padding: 12px 28px;
+    padding: 8px 16px;
     transition: all 0.3s;
     position: relative;
     border: 2px solid #f5c518;
-    border-radius: 10px;
+    border-radius: 8px;
   }
   .nav-btn.nav-gold {
     color: var(--brand-yellow);
@@ -1244,6 +1244,7 @@
 
   .prestation-block {
     margin-bottom: 80px;
+    scroll-margin-top: 160px;
   }
   .prestation-block:last-child { margin-bottom: 0; }
 
@@ -2105,7 +2106,7 @@
   }
   @media (max-width: 1024px) and (min-width: 769px) {
     .nav-links { display: flex; gap: 0; }
-    .nav-btn { font-size: 0.78rem; padding: 8px 14px; border-radius: 6px; }
+    .nav-btn { font-size: 0.7rem; padding: 6px 10px; border-radius: 6px; }
     .nav-dropdown-menu { min-width: 220px; left: auto; right: 0; transform: translateX(0) translateY(8px); }
     .nav-dropdown:hover .nav-dropdown-menu { transform: translateX(0) translateY(0); }
     .nav-dropdown-menu a { font-size: 0.75rem !important; padding: 8px 14px !important; }
@@ -2138,7 +2139,6 @@
     <div class="nav-dropdown dropdown-blue">
       <a href="#" class="nav-btn nav-gold" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Schéma via NDC</a>
       <div class="nav-dropdown-menu">
-        <a href="#presta-remplissage">Remplissage auto depuis NDC</a>
         <a href="#presta-dessin">Dessin automatisé depuis NDC</a>
       </div>
     </div>
@@ -2152,6 +2152,7 @@
         <a href="#presta-tbs">Contrôle barres de terre & TBS</a>
       </div>
     </div>
+    <a href="#presta-sur-mesure" class="nav-btn nav-gold" style="color:var(--accent-green);border-color:rgba(16,185,129,0.4);">Développement sur mesure</a>
     <a href="#fonctionnement" class="nav-btn nav-gold">Notre fonctionnement</a>
     <a href="#devis" class="nav-btn nav-cta-btn">Demander un devis</a>
   </div>
@@ -2250,6 +2251,16 @@
     </div>
     <div class="software-intro-preview">
       <img src="Interface logicielle.png" alt="Interface du logiciel d'automatisation AutomateFactory" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Trame de schéma intégrée -->
+  <div class="software-intro reveal" style="margin-top: -20px;">
+    <div class="software-intro-content">
+      <div class="software-intro-icon">📐</div>
+      <h3>Notre trame de schéma, prête à l'emploi</h3>
+      <p>Nous proposons l'ensemble de ces automatisations sur <strong>une trame de schéma que nous avons développée en interne</strong>, conforme à toutes les normes en vigueur pour un schéma électrique. En choisissant notre trame, vous bénéficiez de <strong>toutes les automatisations présentées sur ce site</strong>, sans aucun développement complémentaire — il suffit de souscrire à l'abonnement.</p>
+      <p style="margin-top: 14px;">Il est bien entendu également possible de travailler en <a href="#presta-sur-mesure" style="color: var(--accent-green); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(16,185,129,0.5);">sur mesure</a>, pour adapter nos automatisations à vos propres trames de schéma.</p>
     </div>
   </div>
 
@@ -2542,7 +2553,7 @@
   <div class="section-divider blue">
     <div class="divider-number">Partie 2</div>
     <div class="divider-title">Schéma automatisé via NDC</div>
-    <div class="divider-sub">Remplissage auto · Dessin auto · Données CANECO</div>
+    <div class="divider-sub">Dessin auto · Données CANECO</div>
   </div>
 
   <div class="category-intro blue-intro reveal">
@@ -2551,41 +2562,7 @@
     <div class="gain-highlight blue-highlight">⏱️ Gain potentiel : jusqu'à 6h par schéma de 100 départs / 20 folios</div>
   </div>
 
-  <!-- 1 — Remplissage automatique depuis note de calcul -->
-  <div class="prestation-block reveal" id="presta-remplissage">
-    <div class="prestation-header">
-      <h3>Remplissage automatique des départs depuis une Note de calcul</h3>
-      <div class="prestation-features">
-        <span class="prestation-feat"><span class="dot-blue">●</span> Import direct depuis CANECO</span>
-        <span class="prestation-feat"><span class="dot-blue">●</span> Désignations auto-remplies</span>
-        <span class="prestation-feat"><span class="dot-blue">●</span> Infos techniques des départs intégrées</span>
-      </div>
-      <div class="gain-badge">
-        <span class="clock-icon">⏱️</span>
-        Gain estimé sur un schéma de 100 départs : ~2 heures
-      </div>
-    </div>
-    <div class="prestation-preview blue-glow">
-      <div class="preview-toolbar">
-        <span class="toolbar-dot"></span>
-        <span class="toolbar-dot"></span>
-        <span class="toolbar-dot"></span>
-        <span class="toolbar-title">auto_remplissage_caneco.dwg — AutoCAD 2026</span>
-      </div>
-      <div class="preview-content">
-        <div class="preview-grid"></div>
-        <div class="preview-play blue">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-        <div class="preview-hint">
-          <div class="scroll-icon"><span></span></div>
-          Voir la démo — Remplissage automatique depuis CANECO
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2 — Automatisation de la partie dessin (EN COURS DE DEV) -->
+  <!-- 1 — Automatisation de la partie dessin (EN COURS DE DEV) -->
   <div class="prestation-block reveal" id="presta-dessin">
     <div class="prestation-header">
       <div class="dev-badge">
@@ -2816,6 +2793,40 @@
 </section>
 
 <!-- ========================================== -->
+<!-- DÉVELOPPEMENT SUR MESURE                    -->
+<!-- ========================================== -->
+<section class="prestations-section" id="presta-sur-mesure" style="scroll-margin-top: 160px;">
+
+  <div class="section-divider" style="--divider-color: var(--accent-green);">
+    <div class="divider-number" style="color: var(--accent-green);">Sur mesure</div>
+    <div class="divider-title" style="color: var(--accent-green);">Développement sur mesure</div>
+    <div class="divider-sub" style="color: var(--text-secondary);">Modules spécifiques · Adapté à vos trames · Code interne</div>
+  </div>
+
+  <div class="category-intro reveal" style="border-color: rgba(16, 185, 129, 0.15); background: linear-gradient(135deg, rgba(16, 19, 28, 0.95), rgba(16, 185, 129, 0.05));">
+    <h3 style="color: var(--accent-green);">🛠️ Un développement pensé pour vos besoins</h3>
+    <p>Au-delà de nos automatisations standard, nous pouvons <strong>développer en interne du code spécifiquement adapté à vos trames de schéma</strong>. Que ce soit un module pour un <strong>schéma de bornier XP</strong>, un <strong>schéma de comptage compteur</strong>, des <strong>vérifications spécifiques à votre activité</strong>, ou toute autre automatisation sur mesure — nous concevons et livrons des solutions qui correspondent exactement à votre façon de travailler.</p>
+    <p style="margin-top: 12px; color: var(--text-secondary);">Chaque projet est unique. Nous analysons vos trames DWG, identifions les tâches automatisables, et développons des modules qui s'intègrent parfaitement à votre environnement AutoCAD. Le résultat : un logiciel taillé sur mesure, prêt à l'emploi, qui vous fait gagner un temps considérable au quotidien.</p>
+    <div class="gain-highlight" style="background: rgba(16, 185, 129, 0.06); border-color: rgba(16, 185, 129, 0.15); color: var(--accent-green);">🚀 Contactez-nous pour discuter de votre projet sur mesure</div>
+  </div>
+
+  <div class="prestation-block reveal">
+    <div class="prestation-header">
+      <h3>Exemples de modules développables sur mesure</h3>
+      <p>Voici quelques exemples de ce que nous pouvons développer. Cette liste n'est pas exhaustive — si vous avez un besoin spécifique, nous pouvons très certainement y répondre.</p>
+      <div class="prestation-features">
+        <span class="prestation-feat"><span class="dot-green">●</span> Schéma de bornier XP automatisé</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Schéma de comptage compteur</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Vérifications spécifiques à votre trame</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Génération de nomenclatures personnalisées</span>
+        <span class="prestation-feat"><span class="dot-green">●</span> Tout autre module adapté à vos besoins</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ========================================== -->
 <!-- NOTRE FONCTIONNEMENT                       -->
 <!-- ========================================== -->
 <section class="process-section" id="fonctionnement">
@@ -2948,7 +2959,7 @@
             <option>Synthèse défauts — Point par point</option>
             <option>Synthèse défauts — Général</option>
             <option>Étiquettes de bornier</option>
-            <option>Remplissage auto depuis note de calcul</option>
+            <option>Dessin automatisé depuis NDC</option>
             <option>Dessin auto depuis note de calcul</option>
             <option>Vérification symboles disjoncteurs</option>
             <option>Vérification incohérences techniques</option>
