@@ -1845,6 +1845,71 @@
     height: auto;
     display: block;
   }
+
+  /* ============ TRAME CAROUSEL ============ */
+  .trame-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  .trame-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .trame-slide.active {
+    position: relative;
+    opacity: 1;
+  }
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: rgba(7, 9, 14, 0.85);
+    color: var(--brand-yellow);
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 5;
+    line-height: 1;
+  }
+  .carousel-btn:hover {
+    background: rgba(37, 99, 235, 0.2);
+    border-color: var(--brand-blue);
+  }
+  .carousel-prev { left: 8px; }
+  .carousel-next { right: 8px; }
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0 4px;
+  }
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0;
+  }
+  .carousel-dot.active {
+    background: var(--brand-yellow);
+    box-shadow: 0 0 8px rgba(234, 179, 8, 0.4);
+  }
+
   @media (max-width: 768px) {
     .software-intro {
       flex-direction: column;
@@ -2391,6 +2456,20 @@
       <h3>Notre trame de schéma, prête à l'emploi</h3>
       <p>Nous proposons l'ensemble de ces automatisations sur <strong>une trame de schéma que nous avons développée en interne</strong>, conforme à toutes les normes en vigueur pour un schéma électrique. En choisissant notre trame, vous bénéficiez de <strong>toutes les automatisations présentées sur ce site</strong>, sans aucun développement complémentaire — il suffit de souscrire à l'abonnement.</p>
       <p style="margin-top: 14px;">Il est bien entendu également possible de travailler en <a href="#presta-sur-mesure" style="color: var(--accent-green); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(16,185,129,0.5);">sur mesure</a>, pour adapter nos automatisations à vos propres trames de schéma.</p>
+    </div>
+    <div class="software-intro-preview" style="position: relative;">
+      <div class="trame-carousel" id="trameCarousel">
+        <img src="sch3b.png" alt="Trame schéma" class="trame-slide active" loading="lazy">
+        <img src="sch1.png" alt="Trame schéma" class="trame-slide" loading="lazy">
+        <img src="sch3.png" alt="Trame schéma" class="trame-slide" loading="lazy">
+        <img src="sch4.png" alt="Trame schéma" class="trame-slide" loading="lazy">
+        <img src="sch6.png" alt="Trame schéma" class="trame-slide" loading="lazy">
+        <img src="sdg.png" alt="Trame schéma" class="trame-slide" loading="lazy">
+        <img src="sdpp.png" alt="Trame schéma" class="trame-slide" loading="lazy">
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="carouselNav(-1)">‹</button>
+      <button class="carousel-btn carousel-next" onclick="carouselNav(1)">›</button>
+      <div class="carousel-dots" id="carouselDots"></div>
     </div>
   </div>
 
@@ -3362,6 +3441,34 @@
       e.currentTarget.classList.remove('open');
     }
   });
+
+  // Trame carousel
+  (function() {
+    const carousel = document.getElementById('trameCarousel');
+    if (!carousel) return;
+    const slides = carousel.querySelectorAll('.trame-slide');
+    const dotsContainer = document.getElementById('carouselDots');
+    let current = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goTo(i);
+      dotsContainer.appendChild(dot);
+    });
+
+    function goTo(index) {
+      slides[current].classList.remove('active');
+      dotsContainer.children[current].classList.remove('active');
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dotsContainer.children[current].classList.add('active');
+    }
+
+    window.carouselNav = function(dir) { goTo(current + dir); };
+
+    setInterval(() => goTo(current + 1), 4000);
+  })();
 
   // (nav highlight removed — using dropdown nav now)
 </script>
