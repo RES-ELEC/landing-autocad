@@ -199,8 +199,8 @@
 
   .nav-links {
     display: flex;
-    gap: 0;
-    align-items: stretch;
+    gap: 4px;
+    align-items: flex-end;
     overflow: visible;
   }
   .nav-btn {
@@ -2138,7 +2138,7 @@
       <span class="nav-group-label">Automatisations</span>
       <div class="nav-group-btns">
         <div class="nav-dropdown dropdown-yellow">
-          <a href="#" class="nav-btn" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Partie commande</a>
+          <a href="#commande" class="nav-btn" onclick="this.parentElement.classList.toggle('open');">Partie commande</a>
           <div class="nav-dropdown-menu">
             <a href="#presta-bornier">Schéma de bornier automatique</a>
             <a href="#presta-synthese">Schéma de synthèse défauts</a>
@@ -2148,13 +2148,13 @@
           </div>
         </div>
         <div class="nav-dropdown dropdown-blue">
-          <a href="#" class="nav-btn" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Schéma via NDC</a>
+          <a href="#schema" class="nav-btn" onclick="this.parentElement.classList.toggle('open');">Schéma automatisé complet via NDC</a>
           <div class="nav-dropdown-menu">
             <a href="#presta-dessin">Dessin automatisé depuis NDC</a>
           </div>
         </div>
         <div class="nav-dropdown dropdown-magenta">
-          <a href="#" class="nav-btn" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Vérifications</a>
+          <a href="#verifications" class="nav-btn" onclick="this.parentElement.classList.toggle('open');">Vérifications des schémas</a>
           <div class="nav-dropdown-menu">
             <a href="#presta-symboles">Vérification symboles disjoncteurs</a>
             <a href="#presta-incoherences">Vérification incohérences techniques</a>
@@ -2247,7 +2247,7 @@
 <!-- ========================================== -->
 <!-- PARTIE 1 : COMMANDE                        -->
 <!-- ========================================== -->
-<section class="prestations-section" id="commande" style="padding-top:100px;">
+<section class="prestations-section" id="commande" style="padding-top:100px; scroll-margin-top:140px;">
   <div class="section-header reveal">
     <div class="section-label">Nos automatisations AutoCAD</div>
     <div class="brand-divider"></div>
@@ -2560,7 +2560,7 @@
 <!-- ========================================== -->
 <!-- PARTIE 2 : SCHÉMA / PUISSANCE              -->
 <!-- ========================================== -->
-<section class="prestations-section" id="schema">
+<section class="prestations-section" id="schema" style="scroll-margin-top:140px;">
 
   <!-- Section Divider: Partie 2 -->
   <div class="section-divider blue">
@@ -2618,7 +2618,7 @@
 <!-- ========================================== -->
 <!-- PARTIE 3 : VÉRIFICATIONS                    -->
 <!-- ========================================== -->
-<section class="prestations-section" id="verifications">
+<section class="prestations-section" id="verifications" style="scroll-margin-top:140px;">
 
   <!-- Section Divider: Partie 3 -->
   <div class="section-divider magenta">
