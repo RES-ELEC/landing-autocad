@@ -210,24 +210,22 @@
     padding: 8px 16px;
     transition: all 0.3s;
     position: relative;
-    border: 2px solid #f5c518;
+    border: 2px solid var(--brand-blue);
     border-radius: 8px;
-  }
-  .nav-btn.nav-gold {
     color: var(--brand-yellow);
   }
-  .nav-btn.nav-gold:hover {
-    background: rgba(234, 179, 8, 0.12);
+  .nav-btn:hover {
+    background: rgba(37, 99, 235, 0.12);
     color: var(--brand-yellow-light);
   }
   .nav-btn.nav-cta-btn {
-    color: white;
-    background: var(--gradient-brand);
-    border: none;
+    color: var(--brand-yellow);
+    background: none;
+    border: 2px solid var(--brand-blue);
   }
   .nav-btn.nav-cta-btn:hover {
-    filter: brightness(1.15);
-    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+    background: rgba(37, 99, 235, 0.12);
+    color: var(--brand-yellow-light);
   }
 
   /* ============ DROPDOWN MENUS ============ */
@@ -267,11 +265,8 @@
     border: none !important;
     background: none !important;
   }
-  .nav-dropdown.dropdown-yellow > .nav-btn { color: var(--brand-yellow); border-color: rgba(234, 179, 8, 0.4); }
-  .nav-dropdown.dropdown-blue > .nav-btn { color: var(--brand-blue-light); border-color: rgba(37, 99, 235, 0.4); }
-  .nav-dropdown.dropdown-magenta > .nav-btn { color: var(--brand-magenta); border-color: rgba(224, 64, 160, 0.4); }
-  .nav-dropdown.dropdown-blue > .nav-btn:hover { background: rgba(37, 99, 235, 0.12); }
-  .nav-dropdown.dropdown-magenta > .nav-btn:hover { background: rgba(224, 64, 160, 0.12); }
+  .nav-dropdown > .nav-btn { color: var(--brand-yellow); border-color: var(--brand-blue); }
+  .nav-dropdown > .nav-btn:hover { background: rgba(37, 99, 235, 0.12); color: var(--brand-yellow-light); }
   .nav-dropdown.dropdown-yellow .nav-dropdown-menu a { color: var(--brand-yellow) !important; }
   .nav-dropdown.dropdown-yellow .nav-dropdown-menu a:hover {
     background: rgba(234, 179, 8, 0.08) !important;
@@ -2152,7 +2147,7 @@
         <a href="#presta-tbs">Contrôle barres de terre & TBS</a>
       </div>
     </div>
-    <a href="#presta-sur-mesure" class="nav-btn nav-gold" style="color:var(--accent-green);border-color:rgba(16,185,129,0.4);">Développement sur mesure</a>
+    <a href="#presta-sur-mesure" class="nav-btn">Développement sur mesure</a>
     <a href="#fonctionnement" class="nav-btn nav-gold">Notre fonctionnement</a>
     <a href="#devis" class="nav-btn nav-cta-btn">Demander un devis</a>
   </div>
