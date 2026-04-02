@@ -223,7 +223,7 @@
   .nav-btn.nav-cta-btn {
     color: white;
     background: var(--gradient-brand);
-    border-color: #f5c518;
+    border: none;
   }
   .nav-btn.nav-cta-btn:hover {
     filter: brightness(1.15);
@@ -884,6 +884,173 @@
   @media (max-width: 768px) {
     .floating-contact { bottom: 20px; right: 20px; }
     .floating-btn { width: 54px; height: 54px; }
+  }
+
+  /* ============ CONTACT MODAL ============ */
+  .contact-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .contact-modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .contact-modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px;
+    max-width: 440px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.95) translateY(10px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .contact-modal-overlay.open .contact-modal {
+    transform: scale(1) translateY(0);
+  }
+  .contact-modal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gradient-accent);
+  }
+  .contact-modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  .contact-modal-close:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    background: var(--bg-card-hover);
+  }
+  .contact-modal-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--gradient-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: white;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 32px rgba(37, 99, 235, 0.25);
+  }
+  .contact-modal h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .contact-modal .contact-role {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .contact-modal .contact-company {
+    font-size: 0.82rem;
+    color: var(--brand-blue-light);
+    font-weight: 600;
+    margin-bottom: 32px;
+  }
+  .contact-modal-phone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 28px;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .contact-modal-phone:hover {
+    border-color: rgba(37, 99, 235, 0.3);
+    background: rgba(37, 99, 235, 0.05);
+  }
+  .contact-modal-phone .phone-icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--gradient-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .contact-modal-phone .phone-number {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .contact-modal-actions {
+    display: flex;
+    gap: 12px;
+  }
+  .contact-modal-actions a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+  .contact-modal-actions .btn-call {
+    background: var(--gradient-brand);
+    color: white;
+  }
+  .contact-modal-actions .btn-call:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.3);
+  }
+  .contact-modal-actions .btn-devis {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+  }
+  .contact-modal-actions .btn-devis:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    transform: translateY(-1px);
+  }
+  @media (max-width: 768px) {
+    .contact-modal { padding: 36px 24px; }
+    .contact-modal-phone .phone-number { font-size: 1.15rem; }
+    .contact-modal-actions { flex-direction: column; }
   }
 
   /* ============ PROCESS STEPS ============ */
@@ -2006,6 +2173,9 @@
     <a href="#fonctionnement" class="btn-primary">
       Demande de rendez-vous gratuit <span class="arrow">→</span>
     </a>
+    <a href="#" class="btn-primary" onclick="event.preventDefault(); document.getElementById('contactModal').classList.add('open');">
+      Nous contacter <span class="arrow">📞</span>
+    </a>
     <a href="#commande" class="btn-secondary">Voir nos automatisations</a>
   </div>
 
@@ -2826,24 +2996,39 @@
 <footer>
   <div class="footer-left">© 2026 AutomateFactory — Automatisations AutoCAD</div>
   <div class="footer-right">
-    <a href="/cdn-cgi/l/email-protection#c0b2afada1a9ae9fa6b2a1aea3af80a8afb4ada1a9aceea6b2">Email</a>
+    <a href="mailto:romain_franco@hotmail.fr">Email</a>
     <a href="tel:+33646383587">06 46 38 35 87</a>
     <a href="#">Mentions légales</a>
   </div>
 </footer>
 
+<!-- CONTACT MODAL -->
+<div class="contact-modal-overlay" id="contactModal">
+  <div class="contact-modal">
+    <button class="contact-modal-close" onclick="document.getElementById('contactModal').classList.remove('open');">✕</button>
+    <div class="contact-modal-avatar">RF</div>
+    <h3>Romain FRANCO</h3>
+    <div class="contact-role">CEO d'Automate Factory</div>
+    <div class="contact-company">AutomateFactory — Automatisations AutoCAD sur mesure</div>
+    <a href="tel:+33646383587" class="contact-modal-phone" style="cursor:pointer;">
+      <div class="phone-icon">📞</div>
+      <div class="phone-number">06 46 38 35 87</div>
+    </a>
+    <div class="contact-modal-actions">
+      <a href="tel:+33646383587" class="btn-call">📞 Appeler</a>
+      <a href="mailto:romain_franco@hotmail.fr" class="btn-devis">📋 Demander un devis</a>
+    </div>
+  </div>
+</div>
+
 <!-- FLOATING CONTACT BUTTON -->
 <div class="floating-contact" id="floatingContact">
   <div class="floating-contact-expanded">
-    <a href="tel:+33646383587" class="floating-option">
+    <a href="#" class="floating-option" onclick="event.preventDefault(); document.getElementById('contactModal').classList.add('open'); floatingContact.classList.remove('open');">
       <span class="opt-icon phone">📞</span>
       Appeler directement
     </a>
-    <a href="/cdn-cgi/l/email-protection#3f4d50525e565160594d5e515c507f57504b525e565311594d" class="floating-option">
-      <span class="opt-icon mail">✉️</span>
-      Envoyer un email
-    </a>
-    <a href="#devis" class="floating-option" id="floatingDevis">
+    <a href="mailto:romain_franco@hotmail.fr" class="floating-option" id="floatingDevis">
       <span class="opt-icon phone">📋</span>
       Demander un devis
     </a>
@@ -2990,11 +3175,18 @@
   const floatingDevis = document.getElementById('floatingDevis');
 
   floatingBtn.addEventListener('click', () => {
-    floatingContact.classList.toggle('open');
+    document.getElementById('contactModal').classList.add('open');
   });
 
   floatingDevis.addEventListener('click', () => {
     floatingContact.classList.remove('open');
+  });
+
+  // Close modal when clicking overlay
+  document.getElementById('contactModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+      e.currentTarget.classList.remove('open');
+    }
   });
 
   // (nav highlight removed — using dropdown nav now)
