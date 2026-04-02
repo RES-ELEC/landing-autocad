@@ -228,6 +228,88 @@
     color: var(--brand-yellow-light);
   }
 
+  /* ============ BURGER MENU (MOBILE) ============ */
+  .nav-burger {
+    display: none !important;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--brand-blue);
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+  .nav-burger:hover { background: rgba(37, 99, 235, 0.12); }
+  .nav-burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--brand-yellow);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .nav-burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.active span:nth-child(2) { opacity: 0; }
+  .nav-burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 99;
+    background: rgba(7, 9, 14, 0.97);
+    backdrop-filter: blur(24px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 80px 32px 40px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+  .nav-mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .nav-mobile-menu a {
+    display: block;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--brand-yellow);
+    padding: 14px 32px;
+    border: 2px solid var(--brand-blue);
+    border-radius: 10px;
+    text-align: center;
+    width: 100%;
+    max-width: 320px;
+    transition: all 0.3s;
+  }
+  .nav-mobile-menu a:hover {
+    background: rgba(37, 99, 235, 0.12);
+    color: var(--brand-yellow-light);
+  }
+  .nav-mobile-menu .mobile-section-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--brand-yellow);
+    opacity: 0.6;
+    margin-top: 8px;
+    border: none;
+    padding: 0;
+  }
+
   /* ============ NAV GROUP AUTOMATISATIONS ============ */
   .nav-group-auto {
     display: flex;
@@ -2080,36 +2162,12 @@
 
   /* ============ RESPONSIVE ============ */
   @media (max-width: 768px) {
-    nav { padding: 8px 12px; flex-wrap: nowrap; gap: 8px; }
+    nav { padding: 8px 16px; }
     .nav-logo img { height: 42px !important; }
-    .nav-links {
-      flex: 1;
-      display: grid !important;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px !important;
-      align-items: stretch;
-    }
-    .nav-group-auto { display: contents; }
-    .nav-group-label { display: none; }
-    .nav-group-btns { display: contents; }
-    .nav-btn {
-      font-size: 0.58rem !important;
-      padding: 5px 6px !important;
-      text-align: center;
-      white-space: nowrap;
-      border-radius: 6px !important;
-      border-width: 1px !important;
-    }
-    .nav-dropdown-menu {
-      min-width: 180px !important;
-      left: 0 !important;
-      transform: translateX(0) translateY(8px) !important;
-    }
-    .nav-dropdown:hover .nav-dropdown-menu,
-    .nav-dropdown.open .nav-dropdown-menu {
-      transform: translateX(0) translateY(0) !important;
-    }
-    .nav-dropdown-menu a { font-size: 0.72rem !important; padding: 8px 12px !important; }
+    .nav-links { display: none !important; }
+    .nav-burger { display: flex !important; }
+    .nav-mobile-menu { display: flex; }
+    .nav-mobile-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
     .hero { padding: 120px 24px 80px; }
     .hero-cards { grid-template-columns: 1fr; max-width: 400px; }
     .process-section, .prestations-section,
@@ -2197,7 +2255,24 @@
     <a href="#fonctionnement" class="nav-btn">Notre fonctionnement</a>
     <a href="#devis" class="nav-btn nav-cta-btn">Demander un devis</a>
   </div>
+  <button class="nav-burger" id="navBurger" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <span class="mobile-section-label">Automatisations</span>
+  <a href="#commande" class="mobile-nav-link">Partie commande</a>
+  <a href="#schema" class="mobile-nav-link">Schéma automatisé complet via NDC</a>
+  <a href="#verifications" class="mobile-nav-link">Vérifications des schémas</a>
+  <span class="mobile-section-label"> </span>
+  <a href="#presta-sur-mesure" class="mobile-nav-link">Développement sur mesure</a>
+  <a href="#fonctionnement" class="mobile-nav-link">Notre fonctionnement</a>
+  <a href="#devis" class="mobile-nav-link">Demander un devis</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -3114,6 +3189,20 @@
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Burger menu toggle
+  const navBurger = document.getElementById('navBurger');
+  const navMobileMenu = document.getElementById('navMobileMenu');
+  navBurger.addEventListener('click', () => {
+    navBurger.classList.toggle('active');
+    navMobileMenu.classList.toggle('open');
+  });
+  document.querySelectorAll('#navMobileMenu a').forEach(link => {
+    link.addEventListener('click', () => {
+      navBurger.classList.remove('active');
+      navMobileMenu.classList.remove('open');
+    });
+  });
+
   // Hero cards staggered reveal
   const heroCardsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
