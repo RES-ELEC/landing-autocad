@@ -197,109 +197,111 @@
     white-space: nowrap;
   }
 
-  .nav-center {
+  .nav-links {
     display: flex;
-    align-items: center;
+    gap: 0;
+    align-items: stretch;
+    overflow: visible;
   }
-  .nav-hub {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: linear-gradient(165deg, rgba(15, 12, 8, 0.95), rgba(10, 8, 5, 0.98));
-    border: 1px solid rgba(234, 179, 8, 0.18);
-    border-radius: 50px;
-    padding: 6px 8px 6px 22px;
+  .nav-btn {
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px 28px;
+    transition: all 0.3s;
     position: relative;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 1px rgba(234, 179, 8, 0.25);
+    border: 2px solid #f5c518;
+    border-radius: 10px;
   }
-  .nav-hub::before {
-    content: '';
+  .nav-btn.nav-gold {
+    color: var(--brand-yellow);
+  }
+  .nav-btn.nav-gold:hover {
+    background: rgba(234, 179, 8, 0.12);
+    color: var(--brand-yellow-light);
+  }
+  .nav-btn.nav-cta-btn {
+    color: white;
+    background: var(--gradient-brand);
+    border-color: #f5c518;
+  }
+  .nav-btn.nav-cta-btn:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+  }
+
+  /* ============ DROPDOWN MENUS ============ */
+  .nav-dropdown {
+    position: relative;
+    display: flex;
+  }
+  .nav-dropdown-menu {
     position: absolute;
-    inset: 0;
-    border-radius: 50px;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(234, 179, 8, 0.35), rgba(234, 179, 8, 0.03) 40%, rgba(234, 179, 8, 0.03) 60%, rgba(234, 179, 8, 0.2));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    min-width: 320px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-hover);
+    border-radius: 12px;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    z-index: 200;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown.open .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 10px 20px !important;
+    font-size: 0.88rem !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    transition: all 0.2s;
+    border: none !important;
+    background: none !important;
+  }
+  .nav-dropdown.dropdown-yellow > .nav-btn { color: var(--brand-yellow); border-color: rgba(234, 179, 8, 0.4); }
+  .nav-dropdown.dropdown-blue > .nav-btn { color: var(--brand-blue-light); border-color: rgba(37, 99, 235, 0.4); }
+  .nav-dropdown.dropdown-magenta > .nav-btn { color: var(--brand-magenta); border-color: rgba(224, 64, 160, 0.4); }
+  .nav-dropdown.dropdown-blue > .nav-btn:hover { background: rgba(37, 99, 235, 0.12); }
+  .nav-dropdown.dropdown-magenta > .nav-btn:hover { background: rgba(224, 64, 160, 0.12); }
+  .nav-dropdown.dropdown-yellow .nav-dropdown-menu a { color: var(--brand-yellow) !important; }
+  .nav-dropdown.dropdown-yellow .nav-dropdown-menu a:hover {
+    background: rgba(234, 179, 8, 0.08) !important;
+    color: var(--brand-yellow-light) !important;
+  }
+  .nav-dropdown.dropdown-blue .nav-dropdown-menu a { color: var(--brand-blue-light) !important; }
+  .nav-dropdown.dropdown-blue .nav-dropdown-menu a:hover {
+    background: rgba(37, 99, 235, 0.08) !important;
+    color: #60a5fa !important;
+  }
+  .nav-dropdown.dropdown-magenta .nav-dropdown-menu a { color: var(--brand-magenta) !important; }
+  .nav-dropdown.dropdown-magenta .nav-dropdown-menu a:hover {
+    background: rgba(224, 64, 160, 0.08) !important;
+    color: var(--brand-magenta-light) !important;
+  }
+  .nav-dropdown-menu .dropdown-section-title {
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 20px 4px !important;
     pointer-events: none;
   }
-  .nav-hub-label {
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--brand-yellow);
-    text-shadow: 0 0 16px rgba(234, 179, 8, 0.4);
-    white-space: nowrap;
-    padding-right: 4px;
-    position: relative;
-  }
-  .nav-hub-label::after {
-    content: '';
-    position: absolute;
-    right: -4px;
-    top: -4px;
-    bottom: -4px;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(234, 179, 8, 0.3), transparent);
-  }
-  .nav-hub-items {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .nav-hub-sep {
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-    flex-shrink: 0;
-  }
-  .nav-hub-item {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 9px 16px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    text-decoration: none;
-    white-space: nowrap;
-    border-radius: 50px;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-  }
-  .nav-hub-item .hub-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    transition: all 0.35s;
-    box-shadow: 0 0 0px transparent;
-  }
-  .nav-hub-item.hub-commande { color: var(--brand-yellow); }
-  .nav-hub-item.hub-commande .hub-dot { background: var(--brand-yellow); }
-  .nav-hub-item.hub-commande:hover {
-    background: rgba(234, 179, 8, 0.1);
-  }
-  .nav-hub-item.hub-commande:hover .hub-dot {
-    box-shadow: 0 0 10px rgba(234, 179, 8, 0.6);
-  }
-  .nav-hub-item.hub-schema { color: var(--brand-blue-light); }
-  .nav-hub-item.hub-schema .hub-dot { background: var(--brand-blue-light); }
-  .nav-hub-item.hub-schema:hover {
-    background: rgba(37, 99, 235, 0.1);
-  }
-  .nav-hub-item.hub-schema:hover .hub-dot {
-    box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
-  }
-  .nav-hub-item.hub-verif { color: var(--brand-magenta); }
-  .nav-hub-item.hub-verif .hub-dot { background: var(--brand-magenta); }
-  .nav-hub-item.hub-verif:hover {
-    background: rgba(224, 64, 160, 0.1);
-  }
-  .nav-hub-item.hub-verif:hover .hub-dot {
-    box-shadow: 0 0 10px rgba(224, 64, 160, 0.6);
+  .nav-dropdown-menu .dropdown-section-title.yellow { color: var(--brand-yellow) !important; }
+  .nav-dropdown-menu .dropdown-section-title.blue { color: var(--brand-blue-light) !important; }
+  .nav-dropdown-menu .dropdown-section-title.magenta { color: var(--brand-magenta) !important; }
+  .nav-dropdown-menu .dropdown-sep {
+    height: 1px;
+    margin: 6px 16px;
+    background: var(--border);
   }
 
   .nav-right {
@@ -1935,8 +1937,11 @@
     .software-intro-icon { text-align: center; }
   }
   @media (max-width: 1024px) and (min-width: 769px) {
-    .nav-hub-label { font-size: 0.58rem; letter-spacing: 3px; }
-    .nav-hub-item { font-size: 0.7rem; padding: 6px 10px; }
+    .nav-links { display: flex; gap: 0; }
+    .nav-btn { font-size: 0.78rem; padding: 8px 14px; border-radius: 6px; }
+    .nav-dropdown-menu { min-width: 220px; left: auto; right: 0; transform: translateX(0) translateY(8px); }
+    .nav-dropdown:hover .nav-dropdown-menu { transform: translateX(0) translateY(0); }
+    .nav-dropdown-menu a { font-size: 0.75rem !important; padding: 8px 14px !important; }
   }
 </style>
 </head>
@@ -1952,32 +1957,36 @@
   <a href="#" class="nav-logo">
     <img src="AutomateFactory.png" alt="AutomateFactory" style="height:126px;width:auto;" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'logo-placeholder\'>Automate<span class=\'elec\'>Factory</span></div>';">
   </a>
-  <div class="nav-center">
-    <div class="nav-hub">
-      <span class="nav-hub-label">Automatisation</span>
-      <div class="nav-hub-items">
-        <a href="#commande" class="nav-hub-item hub-commande">
-          <span class="hub-dot"></span>
-          Partie commande
-        </a>
-        <span class="nav-hub-sep"></span>
-        <a href="#schema" class="nav-hub-item hub-schema">
-          <span class="hub-dot"></span>
-          Schéma automatisé via NDC
-        </a>
-        <span class="nav-hub-sep"></span>
-        <a href="#verifications" class="nav-hub-item hub-verif">
-          <span class="hub-dot"></span>
-          Partie vérification
-        </a>
+  <div class="nav-links">
+    <div class="nav-dropdown dropdown-yellow">
+      <a href="#" class="nav-btn nav-gold" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Partie commande</a>
+      <div class="nav-dropdown-menu">
+        <a href="#presta-bornier">Schéma de bornier automatique</a>
+        <a href="#presta-synthese">Schéma de synthèse défauts</a>
+        <a href="#presta-of">Schéma de contact OF</a>
+        <a href="#presta-etiquettes">Attribution d'étiquettes de bornier</a>
+        <a href="#presta-commande-custom">Commande personnalisée</a>
       </div>
     </div>
-  </div>
-  <div class="nav-right">
-    <div class="nav-right-stack">
-      <a href="#devis" class="nav-cta">Demander un devis</a>
-      <a href="#fonctionnement" class="nav-sub-link">Notre fonctionnement →</a>
+    <div class="nav-dropdown dropdown-blue">
+      <a href="#" class="nav-btn nav-gold" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Schéma via NDC</a>
+      <div class="nav-dropdown-menu">
+        <a href="#presta-remplissage">Remplissage auto depuis NDC</a>
+        <a href="#presta-dessin">Dessin automatisé depuis NDC</a>
+      </div>
     </div>
+    <div class="nav-dropdown dropdown-magenta">
+      <a href="#" class="nav-btn nav-gold" onclick="event.preventDefault(); this.parentElement.classList.toggle('open');">Vérifications</a>
+      <div class="nav-dropdown-menu">
+        <a href="#presta-symboles">Vérification symboles disjoncteurs</a>
+        <a href="#presta-incoherences">Vérification incohérences techniques</a>
+        <a href="#presta-sommaire">Sommaire automatique de folio</a>
+        <a href="#presta-report">Report de folio automatique</a>
+        <a href="#presta-tbs">Contrôle barres de terre & TBS</a>
+      </div>
+    </div>
+    <a href="#fonctionnement" class="nav-btn nav-gold">Notre fonctionnement</a>
+    <a href="#devis" class="nav-btn nav-cta-btn">Demander un devis</a>
   </div>
 </nav>
 
@@ -2088,7 +2097,7 @@
   </div>
 
   <!-- 1 — Schéma de bornier -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-bornier">
     <div class="prestation-header">
       <h3>Schéma de bornier automatique</h3>
       <div class="prestation-features">
@@ -2122,7 +2131,7 @@
   </div>
 
   <!-- 2 — Synthèse défauts (2 options) -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-synthese">
     <div class="prestation-header">
       <h3>Schéma de synthèse défauts</h3>
       <p>Deux modes de génération disponibles selon votre besoin : un schéma point par point avec le détail de chaque départ, ou un schéma de synthèse complet avec vue d'ensemble. Choisissez l'option qui correspond le mieux à votre façon de travailler.</p>
@@ -2214,7 +2223,7 @@
   </div>
 
   <!-- 2b — Contact OF (2 options) -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-of">
     <div class="prestation-header">
       <h3>Schéma de contact OF</h3>
       <p>Deux modes de génération disponibles selon votre besoin : un schéma contact par contact avec le détail de chaque départ, ou un schéma de synthèse général regroupant tous les contacts OF.</p>
@@ -2306,7 +2315,7 @@
   </div>
 
   <!-- 3 — Étiquettes bornier -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-etiquettes">
     <div class="prestation-header">
       <h3>Attribution d'étiquettes de bornier</h3>
       <div class="prestation-features">
@@ -2340,7 +2349,7 @@
   </div>
 
   <!-- 4 — Commande sur mesure (GARDE LE TEXTE) -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-commande-custom">
     <div class="prestation-header">
       <h3>Automatisation de commande personnalisée</h3>
       <p>Vous avez des parties commande spécifiques à votre activité que vous aimeriez automatiser ? Contactez-nous pour en discuter. Nous analysons ensemble vos besoins et développons des automatisations sur mesure adaptées à votre trame et à vos méthodes de travail. Chaque client est unique, chaque automatisation l'est aussi.</p>
@@ -2373,7 +2382,7 @@
   </div>
 
   <!-- 1 — Remplissage automatique depuis note de calcul -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-remplissage">
     <div class="prestation-header">
       <h3>Remplissage automatique des départs depuis une Note de calcul</h3>
       <div class="prestation-features">
@@ -2407,7 +2416,7 @@
   </div>
 
   <!-- 2 — Automatisation de la partie dessin (EN COURS DE DEV) -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-dessin">
     <div class="prestation-header">
       <div class="dev-badge">
         <span class="dev-dot"></span>
@@ -2465,7 +2474,7 @@
   </div>
 
   <!-- 1 — Vérification symboles disjoncteurs -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-symboles">
     <div class="prestation-header">
       <h3>Vérification des symboles disjoncteurs / interrupteurs</h3>
       <div class="prestation-features">
@@ -2499,7 +2508,7 @@
   </div>
 
   <!-- 2 — Incohérences techniques -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-incoherences">
     <div class="prestation-header">
       <h3>Vérification des incohérences techniques</h3>
       <div class="prestation-features">
@@ -2533,7 +2542,7 @@
   </div>
 
   <!-- 3 — Sommaire automatique -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-sommaire">
     <div class="prestation-header">
       <h3>Sommaire automatique de folio</h3>
       <div class="prestation-features">
@@ -2567,7 +2576,7 @@
   </div>
 
   <!-- 4 — Report de folio -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-report">
     <div class="prestation-header">
       <h3>Report de folio automatique</h3>
       <div class="prestation-features">
@@ -2601,7 +2610,7 @@
   </div>
 
   <!-- 5 — Contrôle barres de terre / TBS -->
-  <div class="prestation-block reveal">
+  <div class="prestation-block reveal" id="presta-tbs">
     <div class="prestation-header">
       <h3>Contrôle des barres de terre & bornier TBS</h3>
       <div class="prestation-features">
@@ -2907,6 +2916,20 @@
     });
   });
 
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.nav-dropdown').forEach(dd => {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+
+  // Close dropdown when clicking a dropdown link
+  document.querySelectorAll('.nav-dropdown-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelectorAll('.nav-dropdown').forEach(dd => dd.classList.remove('open'));
+    });
+  });
+
   // Nav shrink on scroll
   window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
@@ -2974,30 +2997,7 @@
     floatingContact.classList.remove('open');
   });
 
-  // Active nav tab highlight on scroll
-  const sections = ['commande', 'schema', 'verifications', 'fonctionnement'];
-  const navTabs = document.querySelectorAll('.nav-hub-item');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(id => {
-      const section = document.getElementById(id);
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 150) current = id;
-      }
-    });
-    navTabs.forEach(tab => {
-      const href = tab.getAttribute('href').replace('#', '');
-      if (href === current) {
-        tab.style.transform = 'scale(1.05)';
-               tab.style.opacity = '1';
-      } else {
-        tab.style.transform = 'scale(1)';
-        tab.style.opacity = '0.85';
-      }
-    });
-  });
+  // (nav highlight removed — using dropdown nav now)
 </script>
 </body>
 </html>
