@@ -81,15 +81,18 @@ nav {
     letter-spacing: -0.01em;
 }
 .logo-mark {
-    width: 28px; height: 28px;
-    background: var(--accent-yellow);
+    width: 36px; height: 36px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #000;
-    font-weight: 700;
-    font-size: 14px;
+    overflow: hidden;
+}
+.logo-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 .nav-links {
     display: flex;
@@ -1296,7 +1299,7 @@ footer {
 <nav>
     <div class="nav-inner">
         <a href="#" class="logo">
-            <div class="logo-mark">AF</div>
+            <div class="logo-mark"><img src="AutomateFactory.png" alt="AutomateFactory"></div>
             AutomateFactory
         </a>
         <div class="nav-links">
@@ -1715,6 +1718,20 @@ footer {
                 <p>Notre trame DWG impose une structure de folio identique à chaque schéma : cartouches, repères, zones dédiées. Cela rend les automatisations fiables et prévisibles à chaque utilisation.</p>
             </div>
 
+        </div>
+
+        <div class="methodo-required" style="display: flex; align-items: center; gap: 28px; padding: 22px 28px; background: rgba(37, 99, 235, 0.05); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: var(--radius-lg); margin-bottom: 18px; flex-wrap: wrap;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent-blue, #3b82f6); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; flex-shrink: 0;">→ Logiciels requis</div>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap; flex: 1;">
+                <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 16px;">
+                    <img src="autocad.png" alt="AutoCAD" style="height: 24px; width: auto; border-radius: 4px;">
+                    <span style="font-size: 14.5px; font-weight: 600; color: var(--text);">AutoCAD</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 16px;">
+                    <img src="caneco.png" alt="CANECO" style="height: 24px; width: auto; border-radius: 4px;">
+                    <span style="font-size: 14.5px; font-weight: 600; color: var(--text);">CANECO</span>
+                </div>
+            </div>
         </div>
 
         <div class="methodo-benefits">
