@@ -1291,6 +1291,113 @@ footer {
 
 /* ============ UTILS ============ */
 .hidden { display: none !important; }
+
+/* ============ RESPONSIVE MOBILE (polish global) ============ */
+@media (max-width: 768px) {
+    /* Nav : logo plus petit, paddings resserrés */
+    .nav-inner { padding: 12px 16px; }
+    .logo-mark { width: 88px; height: 88px; }
+    .nav-cta { padding: 8px 14px; font-size: 12.5px; }
+
+    /* Container */
+    .container { padding: 0 18px; }
+
+    /* Hero */
+    .hero { padding: 56px 0 64px; }
+    .hero-badge {
+        font-size: 11px;
+        padding: 5px 12px;
+        margin-bottom: 20px;
+        line-height: 1.35;
+        text-align: left;
+    }
+    .hero h1 { margin-bottom: 18px; }
+    .hero-sub { margin-bottom: 32px; font-size: 15px; line-height: 1.55; }
+    .hero-ctas { gap: 12px; margin: 0 auto 40px; }
+    .cta-card { padding: 20px 52px 20px 22px; }
+    .cta-arrow { right: 18px; font-size: 22px; }
+    .cta-label { font-size: 10.5px; margin-bottom: 6px; }
+    .cta-title { font-size: 18px; }
+    .cta-sub { font-size: 12.5px; }
+
+    /* Caption vidéo hero : badge au-dessus, texte pleine largeur (fix : coupe du texte en 2) */
+    .hero-video-caption {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        text-align: left;
+        font-size: 12.5px;
+        line-height: 1.55;
+        padding: 0 2px;
+    }
+    .hero-video-caption-label { font-size: 10px; padding: 4px 10px; }
+
+    /* Hero trust : espacement plus serré, centré */
+    .hero-trust {
+        margin-top: 36px;
+        gap: 12px 22px;
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+    }
+
+    /* Sections : réduire l'air perdu sur mobile */
+    .section { padding: 64px 0; }
+    .trust-section { padding: 56px 0; }
+    .section-label { margin-bottom: 18px; font-size: 11px; }
+    .section-title { margin-bottom: 16px; }
+    .section-intro { margin-bottom: 40px; font-size: 15.5px; }
+    .trust-section .section-intro { font-size: 15.5px; line-height: 1.6; }
+
+    /* Pain points */
+    .pain-disclaimer { padding: 14px 16px; font-size: 13px; }
+    .pain-card { padding: 24px; }
+
+    /* Offres */
+    .offer { padding: 28px 24px; }
+    .offer-name { font-size: 24px; }
+    .offer-tag { left: 20px; }
+
+    /* Catalogue vidéo */
+    .filters { margin-bottom: 28px; gap: 6px; }
+    .filter-btn { padding: 7px 12px; font-size: 12px; }
+    .catalog-section { margin-bottom: 56px; }
+    .video-card.featured .video-body { padding: 20px 22px 22px; }
+
+    /* Méthodologie */
+    .methodo-card { padding: 24px; }
+    .methodo-benefits {
+        gap: 14px 20px;
+        padding: 18px 20px;
+    }
+    .methodo-benefit { font-size: 13.5px; }
+
+    /* Final CTA */
+    .final-cta { padding: 72px 0; }
+    .final-cta p { font-size: 16px; margin-bottom: 32px; }
+    .final-cta-buttons { gap: 12px; }
+    .btn-dark, .btn-outline-dark { padding: 14px 22px; font-size: 15px; }
+
+    /* Form */
+    .form-section { padding: 64px 0; }
+    .form-wrapper h3 { font-size: 22px; }
+
+    /* Footer */
+    footer { padding: 36px 0 24px; }
+    .footer-inner { justify-content: center; text-align: center; }
+    .footer-links { justify-content: center; gap: 18px; }
+}
+
+@media (max-width: 480px) {
+    .logo-mark { width: 72px; height: 72px; }
+    .nav-cta { padding: 7px 12px; font-size: 12px; }
+    .hero { padding: 44px 0 56px; }
+    .hero-trust { gap: 10px 18px; }
+    .cta-card { padding: 18px 46px 18px 18px; }
+    .cta-arrow { right: 14px; }
+    .hero-video-caption { font-size: 12px; }
+    .section { padding: 56px 0; }
+    .final-cta { padding: 64px 0; }
+}
 </style>
 </head>
 <body>
